@@ -1,0 +1,54 @@
+Wall clock times (GPU):
+
+1: File rhone1khz_UTC_20200727_235808.575.h5 took 00 minutes and 08.185922 seconds
+2: File rhone1khz_UTC_20200727_131738.575.h5 took 00 minutes and 05.228711 seconds
+3: File rhone1khz_UTC_20200727_133008.575.h5 took 00 minutes and 05.420321 seconds
+4: File rhone1khz_UTC_20200727_102138.575.h5 took 00 minutes and 05.089242 seconds
+5: File rhone1khz_UTC_20200727_153008.575.h5 took 00 minutes and 05.389375 seconds
+6: File rhone1khz_UTC_20200727_212138.575.h5 took 00 minutes and 05.261501 seconds
+7: File rhone1khz_UTC_20200727_125338.575.h5 took 00 minutes and 05.262402 seconds
+8: File rhone1khz_UTC_20200727_004938.575.h5 took 00 minutes and 05.410688 seconds
+9: File rhone1khz_UTC_20200727_113008.575.h5 took 00 minutes and 05.430115 seconds
+10: File rhone1khz_UTC_20200727_233908.575.h5 took 00 minutes and 05.238971 seconds
+11: File rhone1khz_UTC_20200727_050838.575.h5 took 00 minutes and 06.391986 seconds
+12: File rhone1khz_UTC_20200727_073738.575.h5 took 00 minutes and 05.753535 seconds
+13: File rhone1khz_UTC_20200727_112938.575.h5 took 00 minutes and 06.186811 seconds
+14: File rhone1khz_UTC_20200727_160008.575.h5 took 00 minutes and 05.731688 seconds
+15: File rhone1khz_UTC_20200727_075708.575.h5 took 00 minutes and 05.386685 seconds
+16: File rhone1khz_UTC_20200727_144738.575.h5 took 00 minutes and 05.142035 seconds
+17: File rhone1khz_UTC_20200727_120738.575.h5 took 00 minutes and 05.562947 seconds
+18: File rhone1khz_UTC_20200727_050908.575.h5 took 00 minutes and 05.573095 seconds
+19: File rhone1khz_UTC_20200727_075638.575.h5 took 00 minutes and 06.088507 seconds
+20: File rhone1khz_UTC_20200727_095838.575.h5 took 00 minutes and 05.970259 seconds
+
+Wall clock times (CPU):
+
+1: File rhone1khz_UTC_20200727_115908.575.h5 took 00 minutes and 10.176827 seconds
+2: File rhone1khz_UTC_20200727_062408.575.h5 took 00 minutes and 10.066912 seconds
+3: File rhone1khz_UTC_20200727_062338.575.h5 took 00 minutes and 09.936066 seconds
+4: File rhone1khz_UTC_20200727_154338.575.h5 took 00 minutes and 10.451044 seconds
+5: File rhone1khz_UTC_20200727_230708.575.h5 took 00 minutes and 10.867445 seconds
+6: File rhone1khz_UTC_20200727_104608.575.h5 took 00 minutes and 10.760767 seconds
+7: File rhone1khz_UTC_20200727_062108.575.h5 took 00 minutes and 10.675308 seconds
+8: File rhone1khz_UTC_20200727_071308.575.h5 took 00 minutes and 10.731182 seconds
+9: File rhone1khz_UTC_20200727_235508.575.h5 took 00 minutes and 10.879057 seconds
+10: File rhone1khz_UTC_20200727_030308.575.h5 took 00 minutes and 10.685987 seconds
+11: File rhone1khz_UTC_20200727_103938.575.h5 took 00 minutes and 10.865555 seconds
+12: File rhone1khz_UTC_20200727_101408.575.h5 took 00 minutes and 10.708831 seconds
+13: File rhone1khz_UTC_20200727_184238.575.h5 took 00 minutes and 10.920399 seconds
+14: File rhone1khz_UTC_20200727_163108.575.h5 took 00 minutes and 10.657747 seconds
+15: File rhone1khz_UTC_20200727_081338.575.h5 took 00 minutes and 10.702809 seconds
+16: File rhone1khz_UTC_20200727_083038.575.h5 took 00 minutes and 10.746384 seconds
+17: File rhone1khz_UTC_20200727_212708.575.h5 took 00 minutes and 10.720537 seconds
+18: File rhone1khz_UTC_20200727_100608.575.h5 took 00 minutes and 10.652517 seconds
+19: File rhone1khz_UTC_20200727_091608.575.h5 took 00 minutes and 10.682541 seconds
+20: File rhone1khz_UTC_20200727_152908.575.h5 took 00 minutes and 10.673274 seconds
+21: File rhone1khz_UTC_20200727_231208.575.h5 took 00 minutes and 10.701023 seconds
+22: File rhone1khz_UTC_20200727_024638.575.h5 took 00 minutes and 10.627424 seconds
+23: File rhone1khz_UTC_20200727_120608.575.h5 took 00 minutes and 10.636121 seconds
+24: File rhone1khz_UTC_20200727_191938.575.h5 took 00 minutes and 10.630556 seconds
+25: File rhone1khz_UTC_20200727_070638.575.h5 took 00 minutes and 10.695490 seconds
+26: File rhone1khz_UTC_20200727_124638.575.h5 took 00 minutes and 10.855728 seconds
+27: File rhone1khz_UTC_20200727_080508.575.h5 took 00 minutes and 11.338306 seconds
+
+1: File rhone1khz_UTC_20200727_115908.575.h5 took 00 minutes and 07.618055 seconds

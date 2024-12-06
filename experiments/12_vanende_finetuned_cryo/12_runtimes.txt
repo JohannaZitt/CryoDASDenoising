@@ -1,0 +1,52 @@
+Wall-clock times:
+1: File rhone1khz_UTC_20200727_154338.575.h5 took 00 minutes and 07.886305 seconds
+2: File rhone1khz_UTC_20200727_230708.575.h5 took 00 minutes and 04.857440 seconds
+3: File rhone1khz_UTC_20200727_104608.575.h5 took 00 minutes and 04.869997 seconds
+4: File rhone1khz_UTC_20200727_062108.575.h5 took 00 minutes and 05.476477 seconds
+5: File rhone1khz_UTC_20200727_071308.575.h5 took 00 minutes and 05.044578 seconds
+6: File rhone1khz_UTC_20200727_235508.575.h5 took 00 minutes and 04.911990 seconds
+7: File rhone1khz_UTC_20200727_030308.575.h5 took 00 minutes and 05.013146 seconds
+8: File rhone1khz_UTC_20200727_103938.575.h5 took 00 minutes and 05.169320 seconds
+9: File rhone1khz_UTC_20200727_101408.575.h5 took 00 minutes and 05.412069 seconds
+10: File rhone1khz_UTC_20200727_184238.575.h5 took 00 minutes and 04.906851 seconds
+11: File rhone1khz_UTC_20200727_163108.575.h5 took 00 minutes and 04.801436 seconds
+12: File rhone1khz_UTC_20200727_081338.575.h5 took 00 minutes and 05.011602 seconds
+13: File rhone1khz_UTC_20200727_083038.575.h5 took 00 minutes and 04.851781 seconds
+14: File rhone1khz_UTC_20200727_212708.575.h5 took 00 minutes and 04.840073 seconds
+15: File rhone1khz_UTC_20200727_100608.575.h5 took 00 minutes and 05.165114 seconds
+16: File rhone1khz_UTC_20200727_091608.575.h5 took 00 minutes and 05.075460 seconds
+17: File rhone1khz_UTC_20200727_152908.575.h5 took 00 minutes and 05.249074 seconds
+18: File rhone1khz_UTC_20200727_231208.575.h5 took 00 minutes and 05.967784 seconds
+19: File rhone1khz_UTC_20200727_024638.575.h5 took 00 minutes and 06.351876 seconds
+20: File rhone1khz_UTC_20200727_120608.575.h5 took 00 minutes and 06.521154 seconds
+
+Wall clock times (CPU):
+1: File rhone1khz_UTC_20200727_115908.575.h5 took 00 minutes and 10.594656 seconds
+2: File rhone1khz_UTC_20200727_062408.575.h5 took 00 minutes and 10.432225 seconds
+3: File rhone1khz_UTC_20200727_062338.575.h5 took 00 minutes and 10.253134 seconds
+4: File rhone1khz_UTC_20200727_154338.575.h5 took 00 minutes and 10.340402 seconds
+5: File rhone1khz_UTC_20200727_230708.575.h5 took 00 minutes and 10.547375 seconds
+6: File rhone1khz_UTC_20200727_104608.575.h5 took 00 minutes and 10.459172 seconds
+7: File rhone1khz_UTC_20200727_062108.575.h5 took 00 minutes and 10.193961 seconds
+8: File rhone1khz_UTC_20200727_071308.575.h5 took 00 minutes and 10.270446 seconds
+9: File rhone1khz_UTC_20200727_235508.575.h5 took 00 minutes and 10.150908 seconds
+10: File rhone1khz_UTC_20200727_030308.575.h5 took 00 minutes and 10.093765 seconds
+11: File rhone1khz_UTC_20200727_103938.575.h5 took 00 minutes and 10.315103 seconds
+12: File rhone1khz_UTC_20200727_101408.575.h5 took 00 minutes and 10.396880 seconds
+13: File rhone1khz_UTC_20200727_184238.575.h5 took 00 minutes and 10.134247 seconds
+14: File rhone1khz_UTC_20200727_163108.575.h5 took 00 minutes and 10.225892 seconds
+15: File rhone1khz_UTC_20200727_081338.575.h5 took 00 minutes and 10.794681 seconds
+16: File rhone1khz_UTC_20200727_083038.575.h5 took 00 minutes and 10.231687 seconds
+17: File rhone1khz_UTC_20200727_212708.575.h5 took 00 minutes and 10.425307 seconds
+18: File rhone1khz_UTC_20200727_100608.575.h5 took 00 minutes and 10.292732 seconds
+19: File rhone1khz_UTC_20200727_091608.575.h5 took 00 minutes and 10.137397 seconds
+20: File rhone1khz_UTC_20200727_152908.575.h5 took 00 minutes and 10.302490 seconds
+21: File rhone1khz_UTC_20200727_231208.575.h5 took 00 minutes and 10.212126 seconds
+22: File rhone1khz_UTC_20200727_024638.575.h5 took 00 minutes and 10.464292 seconds
+23: File rhone1khz_UTC_20200727_120608.575.h5 took 00 minutes and 10.267981 seconds
+24: File rhone1khz_UTC_20200727_191938.575.h5 took 00 minutes and 10.208273 seconds
+25: File rhone1khz_UTC_20200727_070638.575.h5 took 00 minutes and 10.215616 seconds
+26: File rhone1khz_UTC_20200727_124638.575.h5 took 00 minutes and 10.120055 seconds
+27: File rhone1khz_UTC_20200727_080508.575.h5 took 00 minutes and 10.496934 seconds
+28: File rhone1khz_UTC_20200727_125808.575.h5 took 00 minutes and 11.833163 seconds
+
