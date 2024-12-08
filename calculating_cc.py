@@ -106,8 +106,9 @@ as Described in Section 4.1.1 and Section 4.3.
 # TODO Comment out to calculate values for all experiments
 #experiments = ["01_ablation_horizontal", "02_ablation_vertical", "03_accumulation_horizontal", "04_accumulation_vertical"
 #               "05_combined200", "06_combined800", "07_retrained_combined200", "08_retrained_combined800", "09_borehole_seismometer"]
-experiments = ["01_ablation_horizontal", "03_accumulation_horizontal", "07_retrained_combined200", "11_vanende", "12_vanende_finetuned_cryo",
-               "13_isken_filter", "14_julius_filter"]
+#experiments = ["01_ablation_horizontal", "03_accumulation_horizontal", "07_retrained_combined200", "11_vanende", "12_vanende_finetuned_cryo",
+#               "13_isken_filter", "14_julius_filter"]
+experiments = ["15_DASDL"]
 
 
 data_types = ["ablation", "accumulation"] #
