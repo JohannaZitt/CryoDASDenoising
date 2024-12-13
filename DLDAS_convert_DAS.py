@@ -125,11 +125,11 @@ for id in ids:
 
     print(headers)
 
-    #plt.figure(figsize=(15, 15))
-    #plt.imshow(data, vmax=10, vmin=-10)
-    #plt.show()
+    plt.figure(figsize=(15, 15))
+    plt.imshow(data, vmax=10, vmin=-10)
+    plt.show()
 
-    np.save("experiments/15_DASDL/training_data/rohnegltscher_sample_" + str(id) + ".npy", data)
+    #np.save("experiments/15_DASDL/training_data/rohnegltscher_sample_" + str(id) + ".npy", data)
 
     all_data.append(data)
 
@@ -137,7 +137,7 @@ for id in ids:
 
 
 combined_data = np.concatenate(all_data, axis = 1)
-np.save("experiments/15_DASDL/training_data/rohnegltscher_sample_combined.npy", combined_data)
+#np.save("experiments/15_DASDL/training_data/rohnegltscher_sample_combined.npy", combined_data)
 
 plt.figure(figsize=(15,15))
 plt.imshow(combined_data, vmax=10, vmin=-10)

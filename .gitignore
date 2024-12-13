@@ -17,5 +17,11 @@ experiments/15_DASDL/denoisedDAS
 experiments/07_retrained_combined200/plots
 
 experiments/15_DASDL/DASDL_models
+experiments/15_DASDL/denoisedDAS_first
+experiments/15_DASDL/denoisedDAS_second
+experiments/15_DASDL/denoisedDAS_johanna
+experiments/15_DASDL/matlab_output
+experiments/15_DASDL/buffer
+data/raw_DAS_image
 
 
