@@ -2,6 +2,9 @@ import os
 import numpy as np
 import h5py
 from datetime import datetime, timedelta
+
+from scipy.stats import zscore
+
 from helper_functions import load_das_data, butter_bandpass_filter
 import matplotlib.pyplot as plt
 from pyDASDL.bp import bandpass
@@ -9,6 +12,7 @@ from tensorflow import keras
 from pyDASDL.Utils import patch, patch_inv
 from pyDASDL.fk import *
 from pyDASDL.cwt_2d import cwt_2d
+
 
 """ Event IDs"""
 # specify event ID: [event time, start_channel, amount_channel, category, receiver]
@@ -48,7 +52,7 @@ plt.show()
 
 """ Denoise Data: """
 f = h5py.File(r'experiments/15_DASDL/matlab_output/rohnegltscher_sample900_2000_PreProcessed.mat')
-#BP = np.array(np.transpose(f.get('outF')))
+BP = np.array(np.transpose(f.get('outF')))
 CWTSCALE = np.array(np.transpose(f.get('out')))
 dn = np.array(np.transpose(f.get('dn')))
 
@@ -56,9 +60,9 @@ dn = np.array(np.transpose(f.get('dn')))
 #BP = bandpass(dn, 0.001, 0.001, 120, 6, 6, 0)
 
 # Mein BP funktioniert!!!
-BP = dn
-for i in range(dn.shape[1]):
-    BP[:, i] = butter_bandpass_filter(BP[:, i], 1, 120, 1000, 4)
+#BP = dn
+#for i in range(dn.shape[1]):
+#    BP[:, i] = butter_bandpass_filter(BP[:, i], 1, 120, 1000, 4)
 
 
 
@@ -104,10 +108,14 @@ denoised_data = np.array(outB)
 
 denoised_data_dip = denoised_data - fkdip(denoised_data,0.02)
 
+denoised_data_dip_norm = (denoised_data_dip - np.min(denoised_data_dip)) / np.max(denoised_data_dip)
+denoised_data_dip_norm_z = zscore(denoised_data_dip)
 
-plt.imshow(denoised_data_dip, cmap=cmap, aspect="auto", interpolation="antialiased",
+plt.imshow(denoised_data_dip_norm_z, cmap=cmap, aspect="auto", interpolation="antialiased",
               extent=(0 ,(t_end_das-t_start_das)/400,0,ch_end * ch_ch_spacing/1000),
-              vmin=-1e5, vmax=1e5)
+              vmin=-1, vmax=1)
+
+#plt.savefig("experiments/15_DASDL/plots/icequake82_test.pdf")
 plt.show()
 
 

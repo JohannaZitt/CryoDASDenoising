@@ -1,4 +1,6 @@
 import gc
+from sys import prefix
+
 import h5py
 import numpy as np
 import os
@@ -105,6 +107,13 @@ def denoise_data_DASDL(data, model):
     return  denoised_data
 
 
+def save_split_arrays(split_data, prefix="block"):
+    for i, block in enumerate(split_data):
+        filename = f"{prefix}_{i}.npy"
+        np.save(filename, block)
+        print(f"Saved: {filename}")
+
+
 
 files_path = "data/raw_DAS_image"
 files = os.listdir(files_path)
@@ -136,7 +145,6 @@ for i_file, file in enumerate(files):
         fs=headers["fs"]
 
 
-
         # ensure channel spacing of 4 m
         n_ch_orig = data.shape[0]
         if n_ch_orig == 4800 or n_ch_orig == 4864 or n_ch_orig == 4928:
@@ -145,6 +153,15 @@ for i_file, file in enumerate(files):
         # split data for denoising
         split_data = split_array(data)
 
+        # save blox
+        save_split_arrays(split_data, prefix="experiments/15_DASDL/cwt_data/numpy_array/" + file)
+
+        #print(file)
+        #print(np.shape(split_data))
+
+
+        """
+
         # denoise every single block and save it in buffer
         for i in range(np.shape(split_data)[0]):
             denoised_data = denoise_data_DASDL(split_data[i], model)
@@ -152,7 +169,7 @@ for i_file, file in enumerate(files):
             gc.collect()
 
 
-        """ Save Data """
+        # Save Data
         # Liste zum Speichern der geladenen Blöcke
         loaded_blocks = []
 
@@ -166,6 +183,8 @@ for i_file, file in enumerate(files):
         reconstructed_data = reassemble_blocks(loaded_blocks)
         print("reconstructed_data.shape = ", reconstructed_data.shape)
         write_das_h5.write_block(reconstructed_data, headers, denoised_file_path)
+        
+        """
 
     else:
         print("File " + str(i_file), ": " + file, " already denoised. No Denoising is performed.")

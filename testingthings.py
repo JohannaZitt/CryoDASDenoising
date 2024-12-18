@@ -1,18 +1,17 @@
 
-import numpy as np
-import matplotlib.pyplot as plt
+import os
 
-# plotting buffer sample
+# Generate .txt file for Producing cwt scale data
 
-numbers = np.arange(10)
 
-print(numbers)
 
-for number in numbers:
+data_folder_path = "/home/johanna/JupyterProjects/DLDAS_Denoising_Omar_Saad/numpy_data"
+data_files = os.listdir(data_folder_path)
 
-    data = np.load("experiments/15_DASDL/buffer/denoised_buffer" + str(number) + ".npy")
+with open("experiments/15_DASDL/terminal_commands.txt", "a") as file:
 
-    plt.imshow(data, extent=(0, 5, 0, 5))
-    plt.show()
+    for data_file in data_files:
+        print_text = "matlab -nodisplay -batch \"A_computing_cwt('numpy_data/" + data_file + "', 'm_data/cwt_" + data_file[:-4] + ".m')\""
+        file.write(print_text + "\n")
 
 

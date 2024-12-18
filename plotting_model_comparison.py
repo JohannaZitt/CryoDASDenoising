@@ -29,7 +29,7 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
 experiment = "15_DASDL" # "01_ablation_horizontal", "03_accumulation_horizontal", "07_retrained_combined200", 11_vanende, 12_vanende_finetuned_cryo, 13_isken_filter, 14_julius_filter, 15_DASDL
 
 raw_path = os.path.join("data", "raw_DAS/")
-denoised_path = os.path.join("experiments", experiment, "denoisedDAS_johanna3/")
+denoised_path = os.path.join("experiments", experiment, "denoisedDAS_first/")
 
 ids = [5, 20, 82]
 
