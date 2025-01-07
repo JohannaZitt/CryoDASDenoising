@@ -4,7 +4,7 @@ import h5py
 from datetime import datetime, timedelta
 
 from scipy.stats import zscore
-
+import scipy.io as sio
 from helper_functions import load_das_data, butter_bandpass_filter
 import matplotlib.pyplot as plt
 from pyDASDL.bp import bandpass
@@ -51,10 +51,17 @@ plt.imshow(raw_data.T, cmap=cmap, aspect="auto", interpolation="antialiased",
 plt.show()
 
 """ Denoise Data: """
-f = h5py.File(r'experiments/15_DASDL/matlab_output/rohnegltscher_sample900_2000_PreProcessed.mat')
-BP = np.array(np.transpose(f.get('outF')))
-CWTSCALE = np.array(np.transpose(f.get('out')))
-dn = np.array(np.transpose(f.get('dn')))
+
+f = sio.loadmat(r'experiments/15_DASDL/cwt_data/m_data/cwt_rhone1khz_UTC_20200727_002138.575.h5_7.mat')
+BP = f['outF']
+CWTSCALE = f['out']
+dn = f['dn']
+
+
+#f = h5py.File(r'experiments/15_DASDL/cwt_data/m_data/cwt_rhone1khz_UTC_20200727_002138.575.h5_7.mat')
+#BP = np.array(np.transpose(f.get('outF')))
+#CWTSCALE = np.array(np.transpose(f.get('out')))
+#dn = np.array(np.transpose(f.get('dn')))
 
 
 #BP = bandpass(dn, 0.001, 0.001, 120, 6, 6, 0)

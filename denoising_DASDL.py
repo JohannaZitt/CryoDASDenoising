@@ -56,32 +56,23 @@ def reassemble_blocks(blocks):
     return np.concatenate(rows, axis=0)
 
 
-def denoise_data_DASDL(data, model):
+def denoise_data_DASDL(data_file, model):
 
     w1 = 48
     w2 = 48
     s1z = 8
     s2z = 8
 
-    """ Preprocess Data"""
-    data = data.T
-    n_ch, n_time = data.shape
-    print("n_ch, n_time = ", data.shape)
-    data_bp = bandpass(data, 0.001, 0.001, 120, 6, 6, 0, 0)
-    #data_bpmf = mf(data_bp, 5, 1, 1) # median filter
-
-    """ Compute Freq. Domain Data """
-    ss_log = np.arange(1, 10.5, 0.5)
-    coeffs_nsq, wav_norm_nsq = cwt_2d(data_bp, ss_log, 'mexh')  # (data, scale ,wavelength args) mexican hat
-    data_cwt = np.abs(coeffs_nsq[:, :, - 1])
-    #ma = np.max(np.abs(data_cwt))
-    #data_cwt_norm = data_cwt / ma
+    full_file = "experiments/15_DASDL/cwt_data/m_data/" + data_file
+    print(full_file)
+    f = h5py.File(r'' + full_file + '')
+    data_bp = np.array(np.transpose(f.get('outF')))
+    data_cwt = np.array(np.transpose(f.get('out')))
+    data = np.array(np.transpose(f.get('dn')))
 
     """ Patching the CWT SCALE """
     cwt_scale_patch = patch(data_cwt, w1, w2, s1z, s2z)
     cwt_scale_input = np.reshape(cwt_scale_patch, (cwt_scale_patch.shape[0], w1 * w2, 1))
-
-    print(w1, w2, s1z, s2z)
 
     """ Patching the Band-pass Filtered Data """
     band_pass_patch = patch(data_bp, w1, w2, s1z, s2z)
@@ -107,16 +98,7 @@ def denoise_data_DASDL(data, model):
     return  denoised_data
 
 
-def save_split_arrays(split_data, prefix="block"):
-    for i, block in enumerate(split_data):
-        filename = f"{prefix}_{i}.npy"
-        np.save(filename, block)
-        print(f"Saved: {filename}")
 
-
-
-files_path = "data/raw_DAS_image"
-files = os.listdir(files_path)
 
 """  Load model  """
 model = keras.models.load_model("experiments/15_DASDL/DASDL_models/DAS_PATCH_Johanna.h5")
@@ -128,47 +110,25 @@ highcut = 120
 order = 4
 print_count = 0
 
-for i_file, file in enumerate(files):
+files = os.listdir("experiments/15_DASDL/cwt_data/m_data")
+
+
+for file in files:
 
     denoised_file_path = "experiments/15_DASDL/test/denoised_DASDL_" + file + ".h5"
 
-    if not os.path.exists(denoised_file_path):
+    if not file[-5] == str(0):
+        pass
+    else:
+        for i in range(8):
 
-        print("Denoising File ", str(i_file), ": " + file)
-
-        """  Load DAS data """
-        file_path = os.path.join(files_path, file)
-        with h5py.File(file_path, "r") as f:
-            data = f["Acoustic"][:]
-        headers = load_das_h5.load_headers_only(file_path)
-        print("raw data shape: ", data.shape)
-        fs=headers["fs"]
-
-
-        # ensure channel spacing of 4 m
-        n_ch_orig = data.shape[0]
-        if n_ch_orig == 4800 or n_ch_orig == 4864 or n_ch_orig == 4928:
-            data = data[::2, :]
-
-        # split data for denoising
-        split_data = split_array(data)
-
-        # save blox
-        save_split_arrays(split_data, prefix="experiments/15_DASDL/cwt_data/numpy_array/" + file)
-
-        #print(file)
-        #print(np.shape(split_data))
-
-
-        """
-
-        # denoise every single block and save it in buffer
-        for i in range(np.shape(split_data)[0]):
-            denoised_data = denoise_data_DASDL(split_data[i], model)
+            data_file = file[:-5] + str(i) + ".mat"
+            print(data_file)
+            denoised_data = denoise_data_DASDL(data_file, model)
             np.save("experiments/15_DASDL/buffer/denoised_buffer" + str(i+1) + ".npy", denoised_data)
             gc.collect()
 
-
+        """
         # Save Data
         # Liste zum Speichern der geladenen Blöcke
         loaded_blocks = []
@@ -183,13 +143,4 @@ for i_file, file in enumerate(files):
         reconstructed_data = reassemble_blocks(loaded_blocks)
         print("reconstructed_data.shape = ", reconstructed_data.shape)
         write_das_h5.write_block(reconstructed_data, headers, denoised_file_path)
-        
         """
-
-    else:
-        print("File " + str(i_file), ": " + file, " already denoised. No Denoising is performed.")
-
-
-
-    gc.collect()
-
