@@ -21,22 +21,22 @@ def save_split_arrays(split_data, prefix="block"):
         print(f"Saved: {filename}")
 
 
-files_path = "data/raw_DAS_image"
+files_path = "data/raw_DAS"
 files = os.listdir(files_path)
 
 """  Load model  """
-model = keras.models.load_model("experiments/15_DASDL/DASDL_models/DAS_PATCH_Johanna.h5")
+# model = keras.models.load_model("experiments/15_DASDL/DASDL_models/DAS_PATCH_Johanna.h5")
 # model.summary()
 
 """ Parameters """
-lowcut = 0.001
-highcut = 120
+#lowcut = 0.001
+#highcut = 120
 order = 4
 print_count = 0
 
 for i_file, file in enumerate(files):
 
-    denoised_file_path = "experiments/15_DASDL/test/denoised_DASDL_" + file + ".h5"
+    #denoised_file_path = "experiments/15_DASDL/test/denoised_DASDL_" + file + ".h5"
 
     """  Load DAS data """
     file_path = os.path.join(files_path, file)
@@ -53,8 +53,8 @@ for i_file, file in enumerate(files):
     # split data for denoising
     split_data = split_array(data)
 
-    # save blox
-    save_split_arrays(split_data, prefix="experiments/15_DASDL/cwt_data/numpy_data/" + file)
+    # save block
+    save_split_arrays(split_data, prefix="/media/johanna/Elements/DLDAS_Denoising/split_numpy_das_data/" + file)
 
 
 

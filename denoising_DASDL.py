@@ -3,6 +3,7 @@ from sys import prefix
 
 import h5py
 import numpy as np
+import scipy.io as sio
 import os
 import time
 from datetime import timedelta
@@ -63,12 +64,18 @@ def denoise_data_DASDL(data_file, model):
     s1z = 8
     s2z = 8
 
-    full_file = "experiments/15_DASDL/cwt_data/m_data/" + data_file
-    print(full_file)
-    f = h5py.File(r'' + full_file + '')
-    data_bp = np.array(np.transpose(f.get('outF')))
-    data_cwt = np.array(np.transpose(f.get('out')))
-    data = np.array(np.transpose(f.get('dn')))
+    data = sio.loadmat(data_file)
+
+    # Print the keys to see what variables are in the file
+    # print(data.keys())
+
+    # Access your variables
+    data_bp = data['outF']
+    data_cwt = data['out']
+    data = data['dn']
+    #print(np.shape(data_bp))
+
+
 
     """ Patching the CWT SCALE """
     cwt_scale_patch = patch(data_cwt, w1, w2, s1z, s2z)
@@ -80,7 +87,7 @@ def denoise_data_DASDL(data_file, model):
 
     """ Denoising Data """
     #start = time.time()
-    out = model.predict([band_pass_input, cwt_scale_input], batch_size=64)  # Time and Frequency domain
+    out = model.predict([band_pass_input, cwt_scale_input], batch_size=32)  # Time and Frequency domain
     #end = time.time()
 
     """ Reshape """
@@ -90,14 +97,11 @@ def denoise_data_DASDL(data_file, model):
     outB = patch_inv(outA, n1, n2, w1, w2, s1z, s2z)
     denoised_data = np.array(outB)
 
-    # here you could ad dip filter
+    #print("Denoised Data Shape: ", denoised_data.shape)
 
-    denoised_data = denoised_data.T
-
+    #denoised_data = denoised_data.T
 
     return  denoised_data
-
-
 
 
 """  Load model  """
@@ -110,37 +114,34 @@ highcut = 120
 order = 4
 print_count = 0
 
-files = os.listdir("experiments/15_DASDL/cwt_data/m_data")
-
+path_to_files = "/media/johanna/Elements/DLDAS_Denoising/cwt_data/"
+files = os.listdir(path_to_files)
 
 for file in files:
 
-    denoised_file_path = "experiments/15_DASDL/test/denoised_DASDL_" + file + ".h5"
-
-    if not file[-5] == str(0):
-        pass
+    if not os.path.exists("/media/johanna/Elements/DLDAS_Denoising/denoised_data/denoised_DASDL_" + file +  ".npy"):
+        data_file = os.path.join(path_to_files, file)
+        print("Denoising File: ", file)
+        denoised_data = denoise_data_DASDL(data_file, model)
+        np.save("/media/johanna/Elements/DLDAS_Denoising/denoised_data/denoised_DASDL_" + file +  ".npy", denoised_data)
+        gc.collect()
     else:
-        for i in range(8):
+        print("File denoised_DASDL_" + file +  ".npy already exists.")
 
-            data_file = file[:-5] + str(i) + ".mat"
-            print(data_file)
-            denoised_data = denoise_data_DASDL(data_file, model)
-            np.save("experiments/15_DASDL/buffer/denoised_buffer" + str(i+1) + ".npy", denoised_data)
-            gc.collect()
 
-        """
-        # Save Data
-        # Liste zum Speichern der geladenen Blöcke
-        loaded_blocks = []
+    """
+    # Save Data
+    # Liste zum Speichern der geladenen Blöcke
+    loaded_blocks = []
 
-        # Laden der Blöcke in der richtigen Reihenfolge
-        for i in range(9):  # Angenommen, es sind 9 Blöcke
-            block_path = f"experiments/15_DASDL/buffer/denoised_buffer{i + 1}.npy"
-            loaded_block = np.load(block_path)
-            loaded_blocks.append(loaded_block)
+    # Laden der Blöcke in der richtigen Reihenfolge
+    for i in range(9):  # Angenommen, es sind 9 Blöcke
+        block_path = f"experiments/15_DASDL/buffer/denoised_buffer{i + 1}.npy"
+        loaded_block = np.load(block_path)
+        loaded_blocks.append(loaded_block)
 
-        # Wieder zusammengeführter Array
-        reconstructed_data = reassemble_blocks(loaded_blocks)
-        print("reconstructed_data.shape = ", reconstructed_data.shape)
-        write_das_h5.write_block(reconstructed_data, headers, denoised_file_path)
-        """
+    # Wieder zusammengeführter Array
+    reconstructed_data = reassemble_blocks(loaded_blocks)
+    print("reconstructed_data.shape = ", reconstructed_data.shape)
+    write_das_h5.write_block(reconstructed_data, headers, denoised_file_path)
+    """

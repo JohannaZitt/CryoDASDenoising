@@ -26,7 +26,8 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
                }
 
 """ Experiment"""
-experiment = "03_accumulation_horizontal" # "07_retrained_combined200", 11_vanende, 12_vanende_finetuned_cryo, 13_isken_filter, 14_julius_filter, ACTUALLY MODEL 3!!
+#experiment = "03_accumulation_horizontal" # "07_retrained_combined200", 11_vanende, 12_vanende_finetuned_cryo, 13_isken_filter, 14_julius_filter, ACTUALLY MODEL 3!!
+experiment = "15_DASDL"
 
 raw_path = os.path.join("data", "raw_DAS/")
 denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
@@ -67,7 +68,8 @@ for i, id in enumerate(ids):
     """ Load DAS Data: """
     raw_data, raw_headers, raw_axis = load_das_data(raw_path, t_start, t_end, raw=True, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
     denoised_data, denoised1_headers, denoised1_axis = load_das_data(denoised_path, t_start, t_end, raw=False, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
-
+    print(raw_data.shape)
+    print(denoised_data.shape)
     """ Calculate CC """
     bin_size = 11
     raw_cc = compute_moving_coherence(raw_data, bin_size)

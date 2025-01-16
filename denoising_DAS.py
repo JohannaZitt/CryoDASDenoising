@@ -211,7 +211,7 @@ for model_name in model_names:
                 data = deal_with_artifacts(data)
 
             """ Save Data: """
-            #write_das_h5.write_block(data, headers, saving_path + saving_filename)
+            write_das_h5.write_block(data, headers, saving_path + saving_filename)
             print("Saved Data with Shape: ", data.shape)
 
             if print_count < 50:
