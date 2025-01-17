@@ -151,7 +151,7 @@ for file in files_0:
 
 Skript 4: plotting the denoised data as a hole
 
-'''
+
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -170,11 +170,39 @@ plt.ylabel('Zeit')
 
 # Plot anzeigen
 plt.show()
+'''
+
+'''
+Skript 5: plotting the raw data as a hole
+
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+import h5py
+
+file = "data/raw_DAS/rhone1khz_UTC_20200727_050438.575.h5"
+with h5py.File(file, "r") as f:
+    data_raw  = f["Acoustic"][:]
+print(data.shape)
+
+# Plot erstellen
+plt.figure(figsize=(12, 8))  # Größe des Plots anpassen
+plt.imshow(data_raw, extent=(0 ,2500,0,3000), vmin=-10, vmax=10)
+#plt.colorbar()  # Farbskala anzeigen
+
+# Achsenbeschriftungen
+plt.xlabel('Kanal')
+plt.ylabel('Zeit')
+
+# Plot anzeigen
+plt.show()
+'''
 
 
 '''  
 
-Skript 4: plotting the nine sections seperately
+Skript 6: plotting the nine sections seperately
 
 
 
