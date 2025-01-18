@@ -55,13 +55,15 @@ print(data_bp.shape)
 
 Skript 3: rearange denoised blocks to one single .h5 file
 
-
+'''
 
 
 import numpy as np
 import matplotlib.pyplot as plt
 from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5, write_das_h5
 from pydas_readers.readers.load_das_h5_CLASSIC import load_headers_only
+from helper_functions import resample
+
 
 def reassemble_blocks(blocks):
     side = int(np.sqrt(len(blocks)))
@@ -111,40 +113,82 @@ def merge_blocks(blocks, n=9):
 
     return merged
 
+def reshape_das(data, headers):
+
+    #print(data.shape)
+
+    npts = data.shape[0]
+    nchan = data.shape[1]
+
+    res = data
+
+    # downsample in space:
+    if nchan == 4864 or nchan == 4800 or nchan == 4928:
+        res = data[:, ::6]
+    elif nchan == 2496:
+        res = data[:, ::3]
+    else:
+        print("Unkown nchan: ", res.shape[1])
+
+
+    # downsample in time:
+    res = resample(res, headers['fs'] / 400)
+
+    # update header:
+    headers["nchan"] = res.shape[0]
+    headers["fs"] = 400
+    headers["dx"] = 12
+
+    #print("RESHAPE_DATA.SHAPE: ", res.shape)
+
+    return res, headers
+
+
+
+
 folder_path = "/media/johanna/Elements/DLDAS_Denoising/denoised_data/"
 files = os.listdir(folder_path)
 files_0 = [file for file in files if file.endswith("_0.mat.npy")]
 
-print(files_0)
+#print(files_0)
 
 for file in files_0:
 
-    loaded_blocks = []
-
-    # Load Blocks in correct order
-    for i in range(9):
-        block_path = folder_path + file[:-9] + str(i) + ".mat.npy"
-        #print(block_path)
-        loaded_block = np.load(block_path)
-        loaded_block = loaded_block.T
-        loaded_blocks.append(loaded_block)
-
-    reconstructed_data = merge_blocks(loaded_blocks)
     denoised_file_path = "experiments/15_DASDL/denoisedDAS/"
     das_file_name = file[19:55]
 
-    # Save as .npy file
-    np.save(denoised_file_path + das_file_name + ".npy", reconstructed_data)
+    if not os.path.exists(denoised_file_path + "denoised_DASDL_" + das_file_name):
 
-    headers = load_headers_only("data/raw_DAS/" + das_file_name)
+        print(file)
 
-    print(headers)
-    print(reconstructed_data.shape)
-    print(type(reconstructed_data))
+        loaded_blocks = []
 
-    write_das_h5.write_block(reconstructed_data, headers, denoised_file_path + "denoised_DASDL_" + das_file_name)
+        # Load Blocks in correct order
+        for i in range(9):
+            block_path = folder_path + file[:-9] + str(i) + ".mat.npy"
+            #print(block_path)
+            loaded_block = np.load(block_path)
+            loaded_block = loaded_block.T
+            loaded_blocks.append(loaded_block)
 
-'''
+        reconstructed_data = merge_blocks(loaded_blocks)
+
+        # Save as .npy file
+        # np.save(denoised_file_path + das_file_name + ".npy", reconstructed_data)
+
+        headers = load_headers_only("data/raw_DAS/" + das_file_name)
+
+        das_data, das_headers = reshape_das(reconstructed_data, headers)
+
+        #print(das_headers)
+        #print(das_data.shape)
+
+        print("restoring file: ", file, ";  with shape: ", das_data.shape)
+        write_das_h5.write_block(das_data, das_headers, denoised_file_path + "denoised_DASDL_" + das_file_name)
+
+    else:
+        print("File ", file, " already exists. ")
+
 
 
 '''  
