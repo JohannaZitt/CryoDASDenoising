@@ -8,6 +8,9 @@ Script 1: Generating .txt file for batch script
 '''
 import os
 
+import matplotlib.pyplot as plt
+import numpy as np
+
 """
 import os
 
@@ -55,7 +58,7 @@ print(data_bp.shape)
 
 Skript 3: rearange denoised blocks to one single .h5 file
 
-'''
+
 
 
 import numpy as np
@@ -189,7 +192,7 @@ for file in files_0:
     else:
         print("File ", file, " already exists. ")
 
-
+'''
 
 '''  
 
@@ -274,9 +277,25 @@ for i in range(9):
 
 '''
 
+'''
 
+Skript 7: plotting generated Data by Omar
 
+'''
 
+file = "experiments/15_DASDL/denoisedDAS_omar/Denoised_Johanna_Matlab_CWT.npy"
 
+data = np.load(file)
+print(data.shape)
+
+cmap = "plasma"
+t_start_das = 0
+t_end_das = data.shape[0]
+ch_start = 0
+ch_end = data.shape[1]
+ch_spacing = 4
+
+plt.imshow(data, cmap=cmap, extent=(0 ,(t_end_das-t_start_das)/1000,0,ch_end * ch_spacing/1000))
+plt.show()
 
 
