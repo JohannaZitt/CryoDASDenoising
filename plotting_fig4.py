@@ -113,7 +113,7 @@ for experiment in experiments:
         raw_denoised_cc = raw_denoised_cc[::-1]
 
         """ Parameters for Plotting """
-        cmap = "plasma" # verschiednene colormaps:  cividis, plasma, inferno, viridis, magma, (cmocean.cm.curl, seismic)
+        cmap = "Greys"# "plasma" # verschiednene colormaps:  cividis, plasma, inferno, viridis, magma, (cmocean.cm.curl, seismic)
         t_start_das = 0
         t_end_das = denoised_data_norm.shape[1]
         ch_start = 0
@@ -121,8 +121,8 @@ for experiment in experiments:
         channels = raw_data_norm.shape[0]
         middle_channel = event_times[id][1]
         ch_ch_spacing = 12
-        vmin=-0.9
-        vmax=0.9
+        vmin=-0.6
+        vmax=0.6
         fs = 16
 
         """ Plotting Raw Data: """

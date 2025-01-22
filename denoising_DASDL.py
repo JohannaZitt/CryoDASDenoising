@@ -73,9 +73,7 @@ def denoise_data_DASDL(data_file, model):
     data_bp = data['outF']
     data_cwt = data['out']
     data = data['dn']
-    #print(np.shape(data_bp))
-
-
+    print("BP_shape: ", np.shape(data_bp))
 
     """ Patching the CWT SCALE """
     cwt_scale_patch = patch(data_cwt, w1, w2, s1z, s2z)
@@ -114,16 +112,16 @@ highcut = 120
 order = 4
 print_count = 0
 
-path_to_files = "/media/johanna/Elements/DLDAS_Denoising/cwt_data/"
+path_to_files = "/media/johanna/Elements/DLDAS_Denoising/cwt_data_images/"
 files = os.listdir(path_to_files)
 
 for file in files:
 
-    if not os.path.exists("/media/johanna/Elements/DLDAS_Denoising/denoised_data/denoised_DASDL_" + file +  ".npy"):
+    if not os.path.exists("/media/johanna/Elements/DLDAS_Denoising/denoised_data_images/denoised_DASDL_" + file +  ".npy"):
         data_file = os.path.join(path_to_files, file)
         print("Denoising File: ", file)
         denoised_data = denoise_data_DASDL(data_file, model)
-        np.save("/media/johanna/Elements/DLDAS_Denoising/denoised_data/denoised_DASDL_" + file +  ".npy", denoised_data)
+        np.save("/media/johanna/Elements/DLDAS_Denoising/denoised_data_images/denoised_DASDL_" + file +  ".npy", denoised_data)
         gc.collect()
     else:
         print("File denoised_DASDL_" + file +  ".npy already exists.")

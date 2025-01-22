@@ -53,6 +53,8 @@ for i_file, file in enumerate(files):
     # split data for denoising
     split_data = split_array(data)
 
+    #print(np.shape(split_data))
+
     # save block
     save_split_arrays(split_data, prefix="/media/johanna/Elements/DLDAS_Denoising/split_numpy_das_data/" + file)
 
