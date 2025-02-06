@@ -73,7 +73,10 @@ def denoise_data_DASDL(data_file, model):
     data_bp = data['outF']
     data_cwt = data['out']
     data = data['dn']
-    print("BP_shape: ", np.shape(data_bp))
+    print("BP_shape: ", np.shape(data_bp)) # (channel, time) :((((( DAS HIER IST FALSCH GLAUBE ICH!!!
+
+    # We did not normalize the data:
+    # data_cwt_norm = data_cwt / np.max(np.abs(data_cwt))
 
     """ Patching the CWT SCALE """
     cwt_scale_patch = patch(data_cwt, w1, w2, s1z, s2z)
@@ -121,7 +124,7 @@ for file in files:
         data_file = os.path.join(path_to_files, file)
         print("Denoising File: ", file)
         denoised_data = denoise_data_DASDL(data_file, model)
-        np.save("/media/johanna/Elements/DLDAS_Denoising/denoised_data_images/denoised_DASDL_" + file +  ".npy", denoised_data)
+        #np.save("/media/johanna/Elements/DLDAS_Denoising/denoised_data_images/denoised_DASDL_" + file +  ".npy", denoised_data)
         gc.collect()
     else:
         print("File denoised_DASDL_" + file +  ".npy already exists.")

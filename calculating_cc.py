@@ -72,6 +72,8 @@ def calculate_snr(data, signal_window_length, metric, seis_data):
 
     short_window = data[start_signal:end_signal, :]
     long_window = np.concatenate((data[:start_signal, :], data[end_signal:, :]), axis=0)
+    #print(short_window.shape)
+    #print(long_window.shape)
 
     # Compute metrics for signal and noise
     if metric == "power":
@@ -223,6 +225,8 @@ for experiment in experiments: # for every experiment
                 denoised_cc_seis_total = []
                 raw_data = raw_data[:, ch_start:ch_end]
                 denoised_data = denoised_data[:, ch_start:ch_end]
+                print("RawDataShape: ", raw_data.shape)
+                print("DenoisedDataShape: ", denoised_data.shape)
                 for i in range(raw_data.shape[1]):
                     raw_cc_seis = xcorr(raw_data.T[i], seis_data)
                     denoised_cc_seis = xcorr(denoised_data.T[i], seis_data)
@@ -243,4 +247,4 @@ for experiment in experiments: # for every experiment
 
 
                 """ Save Values: """
-                writer.writerow([id, cc_gain.mean(), cc_gain_seis.max(), snr_power_gain, zone, experiment])
+                #writer.writerow([id, cc_gain.mean(), cc_gain_seis.max(), snr_power_gain, zone, experiment])
