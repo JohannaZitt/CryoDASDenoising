@@ -2,7 +2,7 @@
 
 '''
 
-Script 1: Generating .txt file for batch script
+Script 1: Generating .txt file for batch script (Splited Data)
 
 
 '''
@@ -11,7 +11,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-"""
+""" 
 import os
 
 data_folder_path = "/media/johanna/Elements/DLDAS_Denoising/split_numpy_das_data"
@@ -24,6 +24,25 @@ with open("experiments/15_DASDL/terminal_commands.txt", "a") as file:
         file.write(print_text + "\n")
 
 """
+
+"""
+
+Skript 1.2: Generating .txt file for batch scipt (cut to size)
+
+
+
+"""
+
+import os
+
+data_folder_path = "data/test_data/accumulation_DAS"
+data_files = os.listdir(data_folder_path)
+
+with open("experiments/15_DASDL/terminal_commands_accumulation.txt", "a") as file:
+
+    for data_file in data_files:
+        print_text = "matlab -nodisplay -batch \"A_computing_cwt('/home/johanna/PycharmProjects/MAIN_DAS_denoising/data/test_data/accumulation_DAS/" + data_file + "', '/home/johanna/PycharmProjects/MAIN_DAS_denoising/experiments/15_DASDL/cwt_scale_data/cwt_accumulation/cwt_" + data_file[:-4] + ".mat')\""
+        file.write(print_text + "\n")
 
 
 
@@ -281,7 +300,7 @@ for i in range(9):
 
 Skript 7: plotting generated Data by Omar
 
-'''
+
 
 file = "experiments/15_DASDL/denoisedDAS_omar/Denoised_Johanna_Matlab_CWT.npy"
 
@@ -299,3 +318,4 @@ plt.imshow(data, cmap=cmap, extent=(0 ,(t_end_das-t_start_das)/1000,0,ch_end * c
 plt.show()
 
 
+'''

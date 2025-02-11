@@ -115,16 +115,16 @@ highcut = 120
 order = 4
 print_count = 0
 
-path_to_files = "/media/johanna/Elements/DLDAS_Denoising/cwt_data_images/"
+path_to_files = "experiments/15_DASDL/cwt_scale_data/cwt_ablation"
 files = os.listdir(path_to_files)
 
 for file in files:
 
-    if not os.path.exists("/media/johanna/Elements/DLDAS_Denoising/denoised_data_images/denoised_DASDL_" + file +  ".npy"):
+    if not os.path.exists("experiments/15_DASDL/denoisedDAS/denoised_DASDL_" + file +  ".npy"):
         data_file = os.path.join(path_to_files, file)
         print("Denoising File: ", file)
         denoised_data = denoise_data_DASDL(data_file, model)
-        #np.save("/media/johanna/Elements/DLDAS_Denoising/denoised_data_images/denoised_DASDL_" + file +  ".npy", denoised_data)
+        np.save("experiments/15_DASDL/denoisedDAS/denoised_DASDL_" + file +  ".npy", denoised_data)
         gc.collect()
     else:
         print("File denoised_DASDL_" + file +  ".npy already exists.")
