@@ -35,13 +35,13 @@ Skript 1.2: Generating .txt file for batch scipt (cut to size)
 
 import os
 
-data_folder_path = "data/test_data/accumulation_DAS"
+data_folder_path = "experiments/15_DASDL/test_data"
 data_files = os.listdir(data_folder_path)
 
-with open("experiments/15_DASDL/terminal_commands_accumulation.txt", "a") as file:
+with open("experiments/15_DASDL/terminal_commands.txt", "a") as file:
 
     for data_file in data_files:
-        print_text = "matlab -nodisplay -batch \"A_computing_cwt('/home/johanna/PycharmProjects/MAIN_DAS_denoising/data/test_data/accumulation_DAS/" + data_file + "', '/home/johanna/PycharmProjects/MAIN_DAS_denoising/experiments/15_DASDL/cwt_scale_data/cwt_accumulation/cwt_" + data_file[:-4] + ".mat')\""
+        print_text = "matlab -nodisplay -batch \"A_computing_cwt('/home/johanna/PycharmProjects/MAIN_DAS_denoising/experiments/15_DASDL/test_data/" + data_file + "', '/home/johanna/PycharmProjects/MAIN_DAS_denoising/experiments/15_DASDL/cwt_scale_data/cwt_" + data_file[:-4] + ".mat')\""
         file.write(print_text + "\n")
 
 

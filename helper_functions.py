@@ -101,7 +101,7 @@ def compute_moving_coherence(data, bin_size):  # Code by Martijn van den Ende
 
     return cc
 
-def get_middel_channel(receiver):
+def get_middel_channel(receiver): # these channel numbers account for a channel spacing of 2 m
     channel = 0
     if receiver == "AKU":
         channel = 3740

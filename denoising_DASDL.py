@@ -70,10 +70,11 @@ def denoise_data_DASDL(data_file, model):
     # print(data.keys())
 
     # Access your variables
-    data_bp = data['outF']
-    data_cwt = data['out']
-    data = data['dn']
-    print("BP_shape: ", np.shape(data_bp)) # (channel, time) :((((( DAS HIER IST FALSCH GLAUBE ICH!!!
+    data_bp = data['outF'].T
+    data_cwt = data['out'].T
+    data = data['dn'].T
+    print("BP_shape: ", np.shape(data_bp)) # (time, channel)
+
 
     # We did not normalize the data:
     # data_cwt_norm = data_cwt / np.max(np.abs(data_cwt))
@@ -110,39 +111,24 @@ model = keras.models.load_model("experiments/15_DASDL/DASDL_models/DAS_PATCH_Joh
 #model.summary()
 
 """ Parameters """
-lowcut = 0.001
-highcut = 120
-order = 4
-print_count = 0
+#lowcut = 0.001
+#highcut = 120
+#order = 4
+#print_count = 0
 
-path_to_files = "experiments/15_DASDL/cwt_scale_data/cwt_ablation"
-files = os.listdir(path_to_files)
+data_types = ["ablation", "accumulation"]
 
-for file in files:
+for data_type in data_types:
+    path_to_files = "experiments/15_DASDL/cwt_scale_data"
+    files = os.listdir(path_to_files)
 
-    if not os.path.exists("experiments/15_DASDL/denoisedDAS/denoised_DASDL_" + file +  ".npy"):
-        data_file = os.path.join(path_to_files, file)
-        print("Denoising File: ", file)
-        denoised_data = denoise_data_DASDL(data_file, model)
-        np.save("experiments/15_DASDL/denoisedDAS/denoised_DASDL_" + file +  ".npy", denoised_data)
-        gc.collect()
-    else:
-        print("File denoised_DASDL_" + file +  ".npy already exists.")
+    for file in files:
 
-
-    """
-    # Save Data
-    # Liste zum Speichern der geladenen Blöcke
-    loaded_blocks = []
-
-    # Laden der Blöcke in der richtigen Reihenfolge
-    for i in range(9):  # Angenommen, es sind 9 Blöcke
-        block_path = f"experiments/15_DASDL/buffer/denoised_buffer{i + 1}.npy"
-        loaded_block = np.load(block_path)
-        loaded_blocks.append(loaded_block)
-
-    # Wieder zusammengeführter Array
-    reconstructed_data = reassemble_blocks(loaded_blocks)
-    print("reconstructed_data.shape = ", reconstructed_data.shape)
-    write_das_h5.write_block(reconstructed_data, headers, denoised_file_path)
-    """
+        if not os.path.exists("experiments/15_DASDL/denoisedDAS_new/denoised_DASDL_" + file[8:-4] +  ".npy"):
+            data_file = os.path.join(path_to_files, file)
+            print("Denoising File: ", file)
+            denoised_data = denoise_data_DASDL(data_file, model)
+            np.save("experiments/15_DASDL/denoisedDAS_new/denoised_DASDL_" + file[8:-4] +  ".npy", denoised_data)
+            gc.collect()
+        else:
+            print("File denoised_DASDL_" + file[8:-4] +  ".npy already exists.")

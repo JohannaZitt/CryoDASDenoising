@@ -135,7 +135,7 @@ for experiment in experiments: # for every experiment
 
         for data_type in data_types:  # for every data type
 
-            seis_data_path = "data/test_data/" + data_type
+            seis_data_path = "data/test_data/" + data_type + "_seismometer"
             seismometer_events = os.listdir(seis_data_path)
 
             """
@@ -196,9 +196,23 @@ for experiment in experiments: # for every experiment
                 raw_folder_path = "data/raw_DAS/"
                 raw_data, raw_headers, raw_axis = load_das_data(folder_path =raw_folder_path, t_start = t_start, t_end = t_end, receiver = receiver, raw = True)
 
+                #print(raw_data.shape)
+                #print(seismometer_event)
+
                 """ Load Denoised DAS data """
                 denoised_folder_path = "experiments/" + experiment + "/denoisedDAS/"
-                denoised_data, denoised_headers, denoised_axis = load_das_data(folder_path =denoised_folder_path, t_start = t_start, t_end = t_end, receiver = receiver, raw = False)
+                if experiment == "15_DASDL":
+                    denoised_das_event_name = "denoised_DASDL_" + seismometer_event[:-6] + "_" + data_type + ".npy"
+                    denoised_data = np.load(os.path.join(denoised_folder_path, denoised_das_event_name))
+                    #print(denoised_data.shape)
+
+                    denoised_data = denoised_data[:, ::3]
+                    denoised_data = resample(denoised_data, 1000/400)
+                    denoised_data = denoised_data[800: 3201, 20:60]
+                    #print(denoised_data.shape)
+
+                else:
+                    denoised_data, denoised_headers, denoised_axis = load_das_data(folder_path =denoised_folder_path, t_start = t_start, t_end = t_end, receiver = receiver, raw = False)
 
 
                 """
@@ -247,4 +261,4 @@ for experiment in experiments: # for every experiment
 
 
                 """ Save Values: """
-                #writer.writerow([id, cc_gain.mean(), cc_gain_seis.max(), snr_power_gain, zone, experiment])
+                writer.writerow([id, cc_gain.mean(), cc_gain_seis.max(), snr_power_gain, zone, experiment])

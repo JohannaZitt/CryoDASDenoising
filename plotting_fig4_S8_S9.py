@@ -6,7 +6,7 @@ import numpy as np
 from obspy import UTCDateTime
 from obspy import read
 
-from helper_functions import load_das_data, butter_bandpass_filter, compute_moving_coherence
+from helper_functions import load_das_data, butter_bandpass_filter, compute_moving_coherence, resample
 
 """
 
@@ -33,6 +33,11 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
                82: ["2020-07-27 05:04:55.0", 80, 150, 3, "ALH"],
                }
 
+# 5 -> 120 channel
+# 20 -> 60 channel
+# 82 -> 230 channel
+#
+
 """ Experiment"""
 # "01_ablation_horizontal" #
 # "03_accumulation_horizontal"
@@ -44,8 +49,8 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
 # "15_DASDL"
 
 experiment_names = ["J-invariant\ncryo", "J-invariant\nearth+cryo", "J-invariant\nearth", "DASDL", "AFK", "Conventional"]
-experiments = ["03_accumulation_horizontal", "12_vanende_finetuned_cryo", "11_vanende", "15_DASDL", "13_isken_filter", "14_julius_filter"]
-ids = [5, 20, 82]
+experiments = ["02_accumulation_horizontal", "12_vanende_finetuned_cryo", "11_vanende", "15_DASDL", "13_afk", "14_conventional"] #"15_DASDL",
+ids = [20, 82]
 
 for id in ids:
 
@@ -63,6 +68,8 @@ for id in ids:
 
     for i, experiment in enumerate(experiments):
 
+        print(experiment)
+
         raw_path = os.path.join("data", "raw_DAS/")
         denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
 
@@ -71,13 +78,13 @@ for id in ids:
         t_end = t_start + timedelta(seconds=2)
 
         """ Load Seismometer Data: """
-        string_list = os.listdir("data/test_data/accumulation/")
+        string_list = os.listdir("data/test_data/accumulation_seismometer/")
         if id == 5:
             filtered_strings = [s for s in string_list if s.startswith("ID:5_")]
         else:
             filtered_strings = [s for s in string_list if s.startswith("ID:"+str(id))]
 
-        seis_data_path = "data/test_data/accumulation/" + filtered_strings[0]
+        seis_data_path = "data/test_data/accumulation_seismometer/" + filtered_strings[0]
         seis_stream = read(seis_data_path, starttime=UTCDateTime(t_start),
                            endtime=UTCDateTime(t_end))
         seis_data = seis_stream[0].data
@@ -88,8 +95,26 @@ for id in ids:
 
         """ Load DAS Data: """
         raw_data, raw_headers, raw_axis = load_das_data(raw_path, t_start, t_end, raw=True, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
-        denoised_data, denoised_headers, denoised_axis = load_das_data(denoised_path, t_start, t_end, raw=False, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
+        denoised_data = []
+        if experiment == "15_DASDL":
+            file_name_DASDL = ""
+            if id==5:
+                file_name_DASDL = "denoised_DASDL_ID:5_2020-07-27_19:43:31_c0ALH_p0_accumulation.npy"
+                data_DASDL = np.load("experiments/15_DASDL/denoisedDAS/" + file_name_DASDL)
+                data_DASDL = data_DASDL[:, ::3]
+                data_DASDL = resample(data_DASDL, 1000/400)
+                data_DASDL = data_DASDL.T
+                print(data_DASDL.shape)
 
+            if id == 20:
+                file_name_DASDL = ""
+            if id == 82:
+                file_name_DASDL = ""
+
+        else:
+            denoised_data, denoised_headers, denoised_axis = load_das_data(denoised_path, t_start, t_end, raw=False, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
+
+        print(denoised_data.shape)
 
         """ Normalize Data for Plotting Reasons: """
         raw_data_norm = normalize_by_max(raw_data)

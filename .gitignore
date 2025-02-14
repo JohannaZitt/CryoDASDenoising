@@ -9,12 +9,13 @@ experiments/01_ablation_horizontal/denoisedDAS
 experiments/02_accumulation_horizontal/denoisedDAS
 experiments/04_retrained_combined200/denoisedDAS
 experiments/04_retrained_combined200/plots
-experiments/11_vanende/denoisedDAS
+experiments/11_vanende_earth/denoisedDAS
 experiments/12_vanende_finetuned_cryo/denoisedDAS
-experiments/13_isken_filter/denoisedDAS
-experiments/14_julius_filter/denoisedDAS
+experiments/13_afk/denoisedDAS
+experiments/14_conventional/denoisedDAS
 experiments/15_DASDL/denoisedDAS
 experiments/15_DASDL/denoisedDAS_old
+experiments/15_DASDL/test_data
 
 experiments/07_retrained_combined200/plots
 

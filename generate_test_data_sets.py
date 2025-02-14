@@ -49,7 +49,7 @@ def load_das_data(folder_path, t_start, t_end, receiver, raw):
 
     return data, headers, axis
 
-data_type = "ablation"
+data_type = "accumulation"
 raw_folder_path = "data/raw_DAS/"
 seismometer_path = "data/test_data/" + data_type + "_seismometer"
 saving_path = "data/test_data/" + data_type + "_DAS"
@@ -65,6 +65,8 @@ for event in events:
     event_time = event[-23:-15]
     event_date = event[-34:-24]
     id = re.search(r"ID:(\d+)", event).group(1)
+
+
     receiver = ""
     zone = ""
 
@@ -95,6 +97,6 @@ for event in events:
 
     save_name = "DAS_" + event[:-6] + "_" + data_type + ".npy"
     print(save_name)
-    #np.save("data/test_data/" + data_type + "_DAS/" + save_name, das_array)
+    np.save("data/test_data/" + data_type + "_DAS/" + save_name, das_array)
     #print("Eventdate: ", event_date, ";  Eventtime: ", event_time, "; Receiver: ", receiver,
     #      "; Zone: ", zone, "; DAS data type: ", type(das_data), "; Shape: ", das_data.shape[0])
