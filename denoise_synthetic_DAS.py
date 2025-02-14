@@ -84,10 +84,8 @@ Here we denoise the synthetically generated test data as described in Section 3.
 
 """
 
-model_names = ["03_accumulation_horizontal"]
+model_names = ["02_accumulation_horizontal"]
 
-# TODO change to "from_seis" to denoise synthetic data generated from seismometer data
-# TODO change to "from_DAS" to denoise synthetic data generated from DAS data
 data_type = "from_seis"
 
 """ path to data """
@@ -109,6 +107,7 @@ for model_name in model_names:
 
         """ Load Data """
         raw_data = np.load(data_path+data_file)
+        print(raw_data.shape)
 
         """ Denoise Data """
         denoised_data = denoise_file(raw_data, model)

@@ -1,87 +1,71 @@
-import os
-import re
-
 import matplotlib.pyplot as plt
 import numpy as np
 
 from helper_functions import compute_moving_coherence
 
 
+"""
 
-def extract_id(filename):
-    id = re.search(r"ID:(\d+)", filename).group(1)
-    return id
-
-
-def extract_SNR(filename):
-    snr_pattern = re.compile(r"SNR:(\d+(\.\d+)?)\.npy")
-    match = re.search(snr_pattern, filename)
-    return float(match.group(1))
-
+Here Figure 2 is generated
 
 
 """
 
-Here Figure 3 is generated
 
+def normalize_by_max(data):
+    abs_max = np.max(np.abs(data))
+    return data / abs_max
 
-"""
-
+def normalize_minmax(data):
+    data_min = np.min(data)
+    data_max = np.max(data)
+    return 2 * (data - data_min) / (data_max - data_min) - 1
 
 """ Parameters """
 
 cmap = "plasma"
-vmin = -1.5
-vmax = 1.5
+vmin = -0.3
+vmax = 0.3
 ch_start = 10
 ch_end = 70
 ch_total = 60
 
-t_start_wiggle = 1050
-t_end_wiggle = 1250
-channel_wiggle_comparison = 28
+t_start = 750
+t_end = t_start + 800
 
-event_id = 46
+t_start_wiggle = 1040
+t_end_wiggle = t_start_wiggle + 200
+channel_wiggle_comparison = 28#28
+
 SNR_values = [0.0, 1.0, 3.2, 10.0]
 
 col_pink = "#CE4A75"
 fs=16 # fontsize
 delta = 2 # fontsize delta
 
-""" Get Raw Data Names"""
-data_path = "data/synthetic_DAS/from_seis"
-event_names_all = os.listdir(data_path)
-event_names = [event_name for event_name in event_names_all if str(event_id) == extract_id(event_name)]
-remove_events = []
-for event_name in event_names:
-    if not extract_SNR(event_name) in SNR_values:
-        remove_events.append(event_name)
-for event in remove_events:
-    event_names.remove(event)
-event_names.sort(key=extract_SNR)
-first_event = event_names.pop(0)
-event_names.append(first_event)
-event_names = event_names[::-1]
+noisy_data_path = "data/synthetic_DAS/from_seis/"
+noisy_data_names = ["clean_ID:46_SNR:0.npy", "ID:46_SNR:10.0.npy",  "ID:46_SNR:3.2.npy", "ID:46_SNR:1.0.npy"]
+denoised_data_path = "experiments/02_accumulation_horizontal/denoised_synthetic_DAS/from_seis/"
 
-""" Get Denoised Data Names"""
-experiment = "03_accumulation_horizontal"
-denoised_data_path = os.path.join("experiments", experiment, "denoised_synthetic_DAS", "from_seis")
-denoised_event_names = []
-for event_name in event_names:
-    denoised_event_names.append("denoised_" + event_name)
 
 """ Load Ground Truth Data"""
-ground_truth_data = np.load(os.path.join(data_path, "clean_ID:46_SNR:0.npy"))[ch_start:ch_end]
-
+ground_truth_data = np.load(noisy_data_path + noisy_data_names[0])[ch_start:ch_end]
+ground_truth_data = normalize_by_max(ground_truth_data)
+print(ground_truth_data.shape)
 
 """ Create Plot """
-fig, axs = plt.subplots(len(event_names), 4, figsize=(12, 14), gridspec_kw={"width_ratios": [5, 5, 1, 5]})
+fig, axs = plt.subplots(4, 4, figsize=(12, 14), gridspec_kw={"width_ratios": [5, 5, 1, 5]})
 
-for i, event_name in enumerate(event_names):
+for i, noisy_data_name in enumerate(noisy_data_names):
 
     """ Load Data """
-    data = np.load(os.path.join(data_path, event_name))[ch_start:ch_end]
-    denoised_data = np.load(os.path.join(denoised_data_path, denoised_event_names[i]))[ch_start:ch_end]
+    data = np.load(noisy_data_path + noisy_data_name)[ch_start:ch_end]
+    data = normalize_by_max(data)
+    denoised_data = np.load(denoised_data_path + "denoised_" + noisy_data_name)[ch_start:ch_end]
+    denoised_data = normalize_by_max(denoised_data)
+
+    print(data.shape)
+    print(denoised_data.shape)
 
     """ Calculate CC """
     bin_size = 11
@@ -96,21 +80,32 @@ for i, event_name in enumerate(event_names):
     X_seis = np.vstack((X_seis[:, 1], X_seis[:, 0])).T
 
     """ Plotting Data: """
-    axs[i, 0].imshow(data, cmap=cmap, aspect="auto", interpolation="antialiased",
+    axs[i, 0].imshow(data[:, t_start:t_end], cmap=cmap, aspect="auto", interpolation="antialiased",
           vmin=vmin, vmax=vmax)
-    axs[i, 1].imshow(denoised_data, cmap=cmap, aspect="auto", interpolation="antialiased",
+    axs[i, 1].imshow(denoised_data[:, t_start:t_end], cmap=cmap, aspect="auto", interpolation="antialiased",
                      vmin=vmin, vmax=vmax)
     axs[i, 2].plot(X_seis[:, 0], X_seis[:, 1], color = "black")
     axs[i, 2].axvline(x=1, color="black", linestyle="dotted")
 
     """ Plotting wiggle for wiggle comparison """
     axs[i, 3].plot(ground_truth_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color=col_pink,
-                       label="Co-Located Seismometer", linewidth=1.5, alpha=0.8, zorder=1)
+                       label="Target Waveform", linewidth=1.5, alpha=0.8, zorder=1)
+
     if not i == 0:
-        axs[i, 3].plot(data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="grey", label="Synthetics",
-                       linewidth=1.5, alpha=0.6, zorder=1)
-    axs[i, 3].plot(denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="black",
-                   label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
+        axs[i, 3].plot(0.8*data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="grey",
+                   label="Noisy", linewidth=1.5, alpha=0.6, zorder=1)
+
+    axs[i, 3].plot(0.6*denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="black",
+               label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
+
+
+
+    #if not i == 0:
+    #    axs[i, 3].plot(data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="grey", label="Synthetics",
+    #                   linewidth=1.5, alpha=0.6, zorder=1)
+    #else:
+    #    axs[i, 3].plot(denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="black",
+    #               label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
 
     # print max. amplitudes:
     # print("Event " + event_name)
@@ -132,8 +127,8 @@ for i, event_name in enumerate(event_names):
     axs[i, 2].set_ylim(0, raw_denoised_cc.shape[0]-1)
     axs[i, 3].set_yticks([])
 
-    axs[i, 0].set_xticks([400, 800, 1200, 1600, 2000], [1, 2, 3, 4, 5], fontsize = fs-delta)
-    axs[i, 1].set_xticks([400, 800, 1200, 1600, 2000], [1, 2, 3, 4, 5], fontsize = fs-delta)
+    axs[i, 0].set_xticks([200, 400, 600], [0.5, 1, 1.5], fontsize = fs-delta)
+    axs[i, 1].set_xticks([200, 400, 600], [0.5, 1, 1.5], fontsize = fs-delta)
     axs[i, 2].set_xticks([1, 7], [1, 7], fontsize = fs-delta)
     axs[i, 3].set_xticks([50, 100, 150], [0.2, 0.3, 0.4], fontsize = fs-delta)
     if i == 3:
@@ -158,17 +153,17 @@ for i, event_name in enumerate(event_names):
                        arrowprops=dict(color="black", arrowstyle=arrow_style, linewidth=2))
 
 
-axs[3, 0].annotate("", xy=(t_start_wiggle, 59.5),
-                        xytext=(t_start_wiggle, 59.9),
+axs[3, 0].annotate("", xy=(t_start_wiggle-t_start, 59.5),
+                        xytext=(t_start_wiggle-t_start, 59.9),
                         arrowprops=dict(color="black", arrowstyle=arrow_style, linewidth=1))
-axs[3, 1].annotate("", xy=(t_start_wiggle, 59.5),
-                        xytext=(t_start_wiggle, 59.9),
+axs[3, 1].annotate("", xy=(t_start_wiggle-t_start, 59.5),
+                        xytext=(t_start_wiggle-t_start, 59.9),
                         arrowprops=dict(color="black", arrowstyle=arrow_style, linewidth=1))
-axs[3, 0].annotate("", xy=(t_end_wiggle, 59.5),
-                        xytext=(t_end_wiggle, 59.9),
+axs[3, 0].annotate("", xy=(t_start_wiggle-t_start+200, 59.5),
+                        xytext=(t_start_wiggle-t_start+200, 59.9),
                         arrowprops=dict(color="black", arrowstyle=arrow_style, linewidth=1))
-axs[3, 1].annotate("", xy=(t_end_wiggle, 59.5),
-                        xytext=(t_end_wiggle, 59.9),
+axs[3, 1].annotate("", xy=(t_start_wiggle-t_start+200, 59.5),
+                        xytext=(t_start_wiggle-t_start+200, 59.9),
                         arrowprops=dict(color="black", arrowstyle=arrow_style, linewidth=1))
 
 

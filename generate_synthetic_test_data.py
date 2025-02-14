@@ -48,10 +48,13 @@ def load_das_data(folder_path, t_start, t_end, raw):
 
     return data.T, headers, axis
 
-def compute_shift(gauge = 12, slowness_max = True, fs = 400): # gauge is here channel spacing!
-    if slowness_max:
+def compute_shift(gauge = 12, slowness_type = "mean", fs = 400): # gauge is here channel spacing!
+    slowness = 0
+    if slowness_type == "max":
         slowness = 1 / 1650 # S-wave slowness
-    else:
+    if slowness_type == "mean":
+        slowness = 1 / 2500
+    if slowness_type == "min":
         slowness = 1 / 3900 # P-wave slowness
 
     shift = gauge * slowness * fs
@@ -62,6 +65,7 @@ fs = 400
 lowcut = 1
 highcut = 120
 shift = compute_shift()
+print(shift)
 n_channel = 80
 SNR_values = [-1, 0, 1, 2, 3, 4] #in dB
 
@@ -147,6 +151,6 @@ for data_path in data_paths:
 
         """ Save Data """
         file_name = data_path.split("/")[-1][0:5] + "_SNR:" + str(round(SNR, 1)) + ".npy"
-        np.save("/home/johanna/PycharmProjects/MAIN_DAS_denoising/data/synthetic_DAS/from_seis/" + file_name, synthetic_data)
-
+        np.save("data/synthetic_DAS/from_seis/" + file_name, synthetic_data)
+        np.save("data/synthetic_DAS/from_seis/clean_ID:46_SNR:0.npy", shifted_data)
 
