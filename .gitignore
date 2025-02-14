@@ -7,6 +7,7 @@ data/training_data
 
 experiments/01_ablation_horizontal/denoisedDAS
 experiments/02_accumulation_horizontal/denoisedDAS
+experiments/03_combined200/denoisedDAS
 experiments/04_retrained_combined200/denoisedDAS
 experiments/04_retrained_combined200/plots
 experiments/11_vanende_earth/denoisedDAS

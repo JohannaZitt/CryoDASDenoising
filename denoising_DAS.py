@@ -156,10 +156,7 @@ Here we denoise the data as described in Section 3.4 Denoising Procedure
 
 models_path = "experiments"
 
-# TODO Comment out to calculate values for all experiments
-#model_names = ["01_ablation_horizontal", "02_ablation_vertical", "03_accumulation_horizontal", "04_accumulation_vertical",
-#               "05_combined200", "06_combined800", "07_retrained_combined200", "08_retrained_combined800", "09_borehole_seismometer"]
-model_names = ["03_accumulation_horizontal"]
+model_names = ["03_combined200"]
 
 raw_das_folder_path = "data/raw_DAS"
 
@@ -202,7 +199,7 @@ for model_name in model_names:
         model = keras.models.load_model(model_file)
 
         """ Denoise Data """
-        if os.path.exists(saving_path+saving_filename):
+        if not os.path.exists(saving_path+saving_filename):
             start = time.time()
             data, headers = denoise_file(file=raw_das_file_path, timesamples=timesamples, model=model, N_sub=n_sub, fs_trainingdata=fs_trainingdata)
             end = time.time()

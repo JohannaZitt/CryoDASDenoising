@@ -10,7 +10,7 @@ import numpy as np
 
 #experiments = ["01_ablation_horizontal", "03_accumulation_horizontal", "07_retrained_combined200", "11_vanende", "12_vanende_finetuned_cryo",
 #               "13_isken_filter", "14_julius_filter"]
-experiments = ["15_DASDL"]
+experiments = ["03_combined200"]
 
 
 
