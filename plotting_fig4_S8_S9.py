@@ -23,6 +23,7 @@ def normalize_by_max(data):
     abs_max = np.max(np.abs(data))
     return data / abs_max
 
+
 """ Event IDs"""
 # specify event ID: [event time, start_channel, amount_channel, category, receiver]
 event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
@@ -49,8 +50,8 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
 # "15_DASDL"
 
 experiment_names = ["J-invariant\ncryo", "J-invariant\nearth+cryo", "J-invariant\nearth", "DASDL", "AFK", "Conventional"]
-experiments = ["02_accumulation_horizontal", "12_vanende_finetuned_cryo", "11_vanende", "15_DASDL", "13_afk", "14_conventional"] #"15_DASDL",
-ids = [20, 82]
+experiments = ["02_accumulation_horizontal", "12_vanende_finetuned_cryo", "11_vanende_earth", "15_DASDL", "13_afk", "14_conventional"] #
+ids = [5, 20, 82]
 
 for id in ids:
 
@@ -68,10 +69,13 @@ for id in ids:
 
     for i, experiment in enumerate(experiments):
 
-        print(experiment)
+        print("\n\n" + experiment)
 
         raw_path = os.path.join("data", "raw_DAS/")
-        denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
+        if experiment == "15_DASDL":
+            denoised_path = os.path.join("experiments", experiment, "denoisedDAS_image/complete/")
+        else:
+            denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
 
         event_time = event_times[id][0]
         t_start = datetime.strptime(event_time, "%Y-%m-%d %H:%M:%S.%f")
@@ -94,27 +98,11 @@ for id in ids:
 
 
         """ Load DAS Data: """
+        print(denoised_path)
         raw_data, raw_headers, raw_axis = load_das_data(raw_path, t_start, t_end, raw=True, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
-        denoised_data = []
-        if experiment == "15_DASDL":
-            file_name_DASDL = ""
-            if id==5:
-                file_name_DASDL = "denoised_DASDL_ID:5_2020-07-27_19:43:31_c0ALH_p0_accumulation.npy"
-                data_DASDL = np.load("experiments/15_DASDL/denoisedDAS/" + file_name_DASDL)
-                data_DASDL = data_DASDL[:, ::3]
-                data_DASDL = resample(data_DASDL, 1000/400)
-                data_DASDL = data_DASDL.T
-                print(data_DASDL.shape)
+        denoised_data, denoised_headers, denoised_axis = load_das_data(denoised_path, t_start, t_end, raw=False, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
 
-            if id == 20:
-                file_name_DASDL = ""
-            if id == 82:
-                file_name_DASDL = ""
-
-        else:
-            denoised_data, denoised_headers, denoised_axis = load_das_data(denoised_path, t_start, t_end, raw=False, channel_delta_start=event_times[id][1], channel_delta_end=event_times[id][2])
-
-        print(denoised_data.shape)
+        print("Denoised Data Shape: ", denoised_data.shape)
 
         """ Normalize Data for Plotting Reasons: """
         raw_data_norm = normalize_by_max(raw_data)
@@ -148,8 +136,6 @@ for id in ids:
         vmax=0.4
         vmin_residual = -1
         vmax_residual = 1
-
-
 
         """ Plotting Denoised Data: """
         im1 = axs[i, 0].imshow(denoised_data_norm, cmap=cmap1, aspect="auto", interpolation="antialiased",
@@ -285,7 +271,7 @@ for id in ids:
     letters = ["Aa", "Ab", "Ac", "Ba", "Bb", "Bc", "Ca", "Cb", "Cc", "Da", "Db", "Dc", "Ea", "Eb", "Ec", "Fa", "Fb", "Fc",
                "Ga", "Gb", "Gc", "Ha", "Hb", "Hc"]
 
-    for i in range(6):
+    for i in range(len(experiments)):
         for j in range(3):
             axs[i, j].text(x=0.0, y=1.0, transform=axs[i, j].transAxes, s=letters[i * 3 + j], **letter_params)
 

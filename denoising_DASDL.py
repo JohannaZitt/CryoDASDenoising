@@ -116,19 +116,19 @@ model = keras.models.load_model("experiments/15_DASDL/DASDL_models/DAS_PATCH_Joh
 #order = 4
 #print_count = 0
 
-data_types = ["ablation", "accumulation"]
+#data_types = ["ablation", "accumulation"]
 
-for data_type in data_types:
-    path_to_files = "experiments/15_DASDL/cwt_scale_data"
-    files = os.listdir(path_to_files)
+#for data_type in data_types:
 
-    for file in files:
+path_to_files = "experiments/15_DASDL/cwt_scale_data_image"
+files = os.listdir(path_to_files)
+for file in files:
 
-        if not os.path.exists("experiments/15_DASDL/denoisedDAS_new/denoised_DASDL_" + file[8:-4] +  ".npy"):
-            data_file = os.path.join(path_to_files, file)
-            print("Denoising File: ", file)
-            denoised_data = denoise_data_DASDL(data_file, model)
-            np.save("experiments/15_DASDL/denoisedDAS_new/denoised_DASDL_" + file[8:-4] +  ".npy", denoised_data)
-            gc.collect()
-        else:
-            print("File denoised_DASDL_" + file[8:-4] +  ".npy already exists.")
+    if not os.path.exists("experiments/15_DASDL/denoisedDAS_images/denoised_DASDL_" + file[8:-4] +  ".npy"):
+        data_file = os.path.join(path_to_files, file)
+        print("Denoising File: ", file)
+        denoised_data = denoise_data_DASDL(data_file, model)
+        np.save("experiments/15_DASDL/denoisedDAS_image/denoised_DASDL_" + file[8:-4] +  ".npy", denoised_data)
+        gc.collect()
+    else:
+        print("File denoised_DASDL_" + file[8:-4] +  ".npy already exists.")

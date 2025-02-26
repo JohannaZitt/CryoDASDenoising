@@ -7,10 +7,9 @@ import numpy as np
 
 
 
-
-#experiments = ["01_ablation_horizontal", "03_accumulation_horizontal", "07_retrained_combined200", "11_vanende", "12_vanende_finetuned_cryo",
-#               "13_isken_filter", "14_julius_filter"]
-experiments = ["03_combined200"]
+experiments = ["01_ablation_horizontal", "02_accumulation_horizontal", "03_combined200", "11_vanende_earth", "12_vanende_finetuned_cryo",
+               "13_afk", "14_conventional", "15_DASDL"]
+#experiments = ["03_combined200"]
 
 
 
@@ -102,28 +101,8 @@ for experiment in experiments:
     #print("Acc SNR VARIANCE: ", acc_snr_variance_median)
     #print("Acc SNR RMS: ", acc_snr_rms_median)
     #print("Acc SNR Absolute: ", acc_snr_absolute_median)
+    print("\n")
+    print("SUM: ", abl_lwc_median+abl_cc_seis_median+abl_snr_power_median+
+          acc_lwc_median+acc_cc_seis_median+acc_snr_power_median)
     print("\n \n \n")
-
-
-
-    """ Plotting Data: 
-    plt.plot(ablation_cc_gain, label = "ablation_cc_gain", marker="o", linestyle="")
-    plt.plot(accumulation_cc_gain, label="accumulation_cc_gain", marker="o", linestyle="")
-    plt.title("Experiment: " + experiment + "; LWC")
-    plt.legend()
-    plt.show()
-
-    plt.plot(ablation_cc_gain_seis, label="ablation_cc_gain_seis", marker="o", linestyle="")
-    plt.plot(accumulation_cc_gain_seis, label = "accumulation_cc_gain_seis", marker="o", linestyle="")
-    plt.title("Experiment: " + experiment + "; CC Seis")
-    plt.legend()
-    plt.show()
-
-    plt.plot(ablation_snr, label="ablation_cc_gain_seis", marker="o", linestyle="")
-    plt.plot(accumulation_snr, label="accumulation_cc_gain_seis", marker="o", linestyle="")
-    plt.title("Experiment: " + experiment + "; CC Seis")
-    plt.legend()
-    plt.show()
-    """
-
 

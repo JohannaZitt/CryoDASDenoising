@@ -175,17 +175,17 @@ events = {5: ["2020-07-27 19:43:30.5", 45, 75, 1, "ALH", "5_"],
          }
 
 """ Parameters """
-id = 5 #set to 5 for generating Figure S3, set to 20 for generating Figure S4, set to 82 for generating Figure S5
+id = 82 #set to 5 for generating Figure S3, set to 20 for generating Figure S4, set to 82 for generating Figure S5
 event_time = events[id][0]
 t_start = datetime.strptime(event_time, "%Y-%m-%d %H:%M:%S.%f")
 t_end = t_start + timedelta(seconds=2)
-experiment = "03_accumulation_horizontal"
+experiment = "02_accumulation_horizontal"
 receiver = "ALH"
 
 """ load seismometer data """
-string_list = os.listdir("data/test_data/accumulation/")
+string_list = os.listdir("data/test_data/accumulation_seismometer/")
 filtered_strings = [s for s in string_list if s.startswith("ID:" + events[id][5])]
-seis_data_path = "data/test_data/accumulation/" + filtered_strings[0]
+seis_data_path = "data/test_data/accumulation_seismometer/" + filtered_strings[0]
 seis_stream = read(seis_data_path, starttime=UTCDateTime(t_start-timedelta(seconds=1)), endtime=UTCDateTime(t_end))
 seis_data = seis_stream[0].data
 seis_stats = seis_stream[0].stats

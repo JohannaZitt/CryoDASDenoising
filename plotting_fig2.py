@@ -40,6 +40,8 @@ channel_wiggle_comparison = 28#28
 SNR_values = [0.0, 1.0, 3.2, 10.0]
 
 col_pink = "#CE4A75"
+#col_purple = "#3C049B"
+#col_pink = "#C7427C"
 fs=16 # fontsize
 delta = 2 # fontsize delta
 
@@ -99,22 +101,12 @@ for i, noisy_data_name in enumerate(noisy_data_names):
                label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
 
 
-
-    #if not i == 0:
-    #    axs[i, 3].plot(data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="grey", label="Synthetics",
-    #                   linewidth=1.5, alpha=0.6, zorder=1)
-    #else:
-    #    axs[i, 3].plot(denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="black",
-    #               label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
-
     # print max. amplitudes:
     # print("Event " + event_name)
     # print("maximal amplitude of ground truth data: ", str(ground_truth_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle].max()))
     # print("maximal amplitude of noisy data: ", str(data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle].max()))
     # print("maximal amplitude of denoised data: ", str(denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle].max()))
 
-    # legend
-    #axs[i, 3].legend(fontsize = 15)
 
 
     """ Label and Ticks """
@@ -190,8 +182,8 @@ for i in range(4):
 plt.tight_layout()
 
 """ Save plot """
-#plt.savefig("plots/fig3.pdf", dpi=400)
-plt.show()
+plt.savefig("plots/fig2.pdf", dpi=400)
+#plt.show()
 
 
 

@@ -17,6 +17,8 @@ experiments/14_conventional/denoisedDAS
 experiments/15_DASDL/denoisedDAS
 experiments/15_DASDL/denoisedDAS_old
 experiments/15_DASDL/test_data
+experiments/15_DASDL/cwt_scale_data_image
+experiments/15_DASDL/denoisedDAS_image
 
 experiments/07_retrained_combined200/plots
 

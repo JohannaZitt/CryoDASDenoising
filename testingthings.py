@@ -31,7 +31,6 @@ Skript 1.2: Generating .txt file for batch scipt (cut to size)
 
 
 
-"""
 
 import os
 
@@ -44,6 +43,7 @@ with open("experiments/15_DASDL/terminal_commands.txt", "a") as file:
         print_text = "matlab -nodisplay -batch \"A_computing_cwt('/home/johanna/PycharmProjects/MAIN_DAS_denoising/experiments/15_DASDL/test_data/" + data_file + "', '/home/johanna/PycharmProjects/MAIN_DAS_denoising/experiments/15_DASDL/cwt_scale_data/cwt_" + data_file[:-4] + ".mat')\""
         file.write(print_text + "\n")
 
+"""
 
 
 '''
@@ -77,7 +77,7 @@ print(data_bp.shape)
 
 Skript 3: rearange denoised blocks to one single .h5 file
 
-
+'''
 
 
 import numpy as np
@@ -157,9 +157,11 @@ def reshape_das(data, headers):
     res = resample(res, headers['fs'] / 400)
 
     # update header:
-    headers["nchan"] = res.shape[0]
+    headers["npts"] = res.shape[0]
+    headers["nchan"] = res.shape[1]
     headers["fs"] = 400
     headers["dx"] = 12
+
 
     #print("RESHAPE_DATA.SHAPE: ", res.shape)
 
@@ -168,15 +170,19 @@ def reshape_das(data, headers):
 
 
 
-folder_path = "/media/johanna/Elements/DLDAS_Denoising/denoised_data/"
+folder_path = "experiments/15_DASDL/denoisedDAS_image/pieces/"
 files = os.listdir(folder_path)
-files_0 = [file for file in files if file.endswith("_0.mat.npy")]
+files_0 = [file for file in files if file.endswith("_0.npy")]
+
+raw_file_names = ["rhone1khz_UTC_20200727_002138.575.h5", "rhone1khz_UTC_20200727_194308.575.h5",  "rhone1khz_UTC_20200727_050438.575.h5"]
 
 #print(files_0)
 
-for file in files_0:
+for j, file in enumerate(files_0):
 
-    denoised_file_path = "experiments/15_DASDL/denoisedDAS/"
+    print("\n\n")
+
+    denoised_file_path = "experiments/15_DASDL/denoisedDAS_image/complete/"
     das_file_name = file[19:55]
 
     if not os.path.exists(denoised_file_path + "denoised_DASDL_" + das_file_name):
@@ -187,8 +193,7 @@ for file in files_0:
 
         # Load Blocks in correct order
         for i in range(9):
-            block_path = folder_path + file[:-9] + str(i) + ".mat.npy"
-            #print(block_path)
+            block_path = folder_path + file[:-9] + ".h5_" + str(i) + ".npy"
             loaded_block = np.load(block_path)
             loaded_block = loaded_block.T
             loaded_blocks.append(loaded_block)
@@ -197,21 +202,22 @@ for file in files_0:
 
         # Save as .npy file
         # np.save(denoised_file_path + das_file_name + ".npy", reconstructed_data)
+        print(raw_file_names[j])
+        headers = load_headers_only("data/raw_DAS_image/" + raw_file_names[j])
+        print(headers)
 
-        headers = load_headers_only("data/raw_DAS/" + das_file_name)
+        das_data, das_headers = reshape_das(reconstructed_data.T, headers)
 
-        das_data, das_headers = reshape_das(reconstructed_data, headers)
-
-        #print(das_headers)
+        print(das_headers)
         #print(das_data.shape)
 
         print("restoring file: ", file, ";  with shape: ", das_data.shape)
-        write_das_h5.write_block(das_data, das_headers, denoised_file_path + "denoised_DASDL_" + das_file_name)
+        write_das_h5.write_block(das_data, das_headers, denoised_file_path + "denoised_DASDL_" + das_file_name + ".h5")
 
     else:
         print("File ", file, " already exists. ")
 
-'''
+
 
 '''  
 
