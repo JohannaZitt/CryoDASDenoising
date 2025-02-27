@@ -7,7 +7,7 @@ from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5
 from helper_functions import get_middel_channel, butter_bandpass_filter, resample
 import numpy as np
 
-# TODO: fix y-labels, save plot for every event, and add red arrow
+# TODO: save plot for every event, and add red arrow
 
 
 def load_das_data(folder_path, t_start, t_end, receiver, raw, ch_middle, ch_delta):
@@ -86,12 +86,19 @@ def plot_sectionplot(raw_data, denoised_data, seis_data, seis_stats, saving_path
     plt.xticks([], [])
     # plt.xlabel("Time[s]", size=font_m)
     plt.ylabel("Offset [km]", size=font_m)
+    plt.yticks(np.arange(0, n * 1.5, 12), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6], size=font_s)
     #plt.gca().yaxis.set_major_locator(MaxNLocator(nbins=6))
-
 
     plt.title("Noisy DAS Data", loc="left")
     plt.annotate("", xy=(0, (channels-middle_channel) * 1.5), xytext=(-1, (channels-middle_channel) * 1.5),
                  arrowprops=dict(color="red", arrowstyle="->", linewidth=2))
+
+    """ Add red arrow """
+    arrow_style = "fancy,head_width=0.5,head_length=1"
+    ax = plt.gca()
+    ax.annotate("", xy=(0, 22.5),
+                xytext=(-0.02, 22.5),
+                arrowprops=dict(color="red", arrowstyle=arrow_style, linewidth=2))
 
     """ Plot denoised data """
     plt.subplot(222)
@@ -143,9 +150,8 @@ def plot_sectionplot(raw_data, denoised_data, seis_data, seis_stats, saving_path
 
 seismometer_data_path = "data/test_data/accumulation_seismometer/"
 seismometer_events = os.listdir(seismometer_data_path)
-seismometer_events = seismometer_events[10:15]
 for seismometer_event in seismometer_events:
-
+    print(seismometer_event)
     # Get event information from data path:
     date = "2020-07-27"
     receiver = "ALH"
@@ -162,14 +168,12 @@ for seismometer_event in seismometer_events:
     seismometer_stream = read(seismometer_data_path + seismometer_event, starttime=UTCDateTime(t_start), endtime=UTCDateTime(t_end))
     seis_stats = seismometer_stream[0].stats
     seismometer_data = seismometer_stream[0]
-    #print(np.shape(seismometer_data))
 
     # Load raw DAS data:
     raw_folder_path = "data/raw_DAS/"
     raw_data, raw_headers, raw_axis = load_das_data(folder_path=raw_folder_path, t_start=t_start, t_end=t_end,
                                                     receiver=receiver, raw=True, ch_middle=ch_middle, ch_delta=ch_delta)
 
-    #print(raw_data.shape)
     # Load denoised DAS data:
     denoised_folder_path = "experiments/03_combined200/denoisedDAS/"
     denoised_data, denoised_headers, denoised_axis = load_das_data(folder_path=denoised_folder_path, t_start=t_start,

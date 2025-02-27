@@ -10,8 +10,6 @@ not_public
 experiments/01_ablation_horizontal/denoisedDAS
 experiments/02_accumulation_horizontal/denoisedDAS
 experiments/03_combined200/denoisedDAS
-not_public/experiments/04_retrained_combined200/denoisedDAS
-not_public/experiments/04_retrained_combined200/plots
 experiments/11_vanende_earth/denoisedDAS
 experiments/12_vanende_finetuned_cryo/denoisedDAS
 experiments/13_afk/denoisedDAS

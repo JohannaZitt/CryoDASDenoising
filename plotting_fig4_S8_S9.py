@@ -9,7 +9,8 @@ from obspy import read
 from helper_functions import load_das_data, butter_bandpass_filter, compute_moving_coherence, resample
 
 """
-
+not_public/experiments/04_retrained_combined200/denoisedDAS
+not_public/experiments/04_retrained_combined200/plots
 Here Figure 4 is generated
 
 TODO: DASDL15 without .h5 data
