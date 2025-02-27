@@ -99,7 +99,7 @@ if __name__ == "__main__":
 """
 
 
-file_path = "data/raw_DAS/rhone1khz_UTC_20200727_050438.575.h5"
+file_path = "../data/raw_DAS/rhone1khz_UTC_20200727_050438.575.h5"
 
 event_times = {0: ["2020-07-27 08:17:35.3", 1705, 2250, 1, "ALH"],
                5: ["2020-07-27 19:43:31.0", 1705, 2250, 1, "ALH"],
@@ -120,7 +120,7 @@ for id in ids:
     t_end = t_start + timedelta(seconds=1.2)
     ch_start = event_times[id][1]
     ch_end = event_times[id][2]
-    data, headers, axis = load_das_h5.load_das_custom(t_start, t_end, input_dir="data/raw_DAS/", convert=False)
+    data, headers, axis = load_das_h5.load_das_custom(t_start, t_end, input_dir="../data/raw_DAS/", convert=False)
     data = data[:, ch_start:ch_end]
 
     print(headers)

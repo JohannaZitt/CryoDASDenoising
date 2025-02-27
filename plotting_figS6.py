@@ -11,7 +11,7 @@ from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5
 
 def get_event_time_from_id(id):
 
-    folder_to_filenames = "experiments/03_accumulation_horizontal/plots/accumulation/folder_for_sta_lta"
+    folder_to_filenames = "experiments/02_accumulation_horizontal/plots/accumulation/folder_for_sta_lta"
 
     strings = os.listdir(folder_to_filenames)
     filtered_strings = [s for s in strings if "ID:"+str(id)+"_" in s]

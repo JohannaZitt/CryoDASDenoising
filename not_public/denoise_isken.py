@@ -25,7 +25,7 @@ from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5, write_das_
 from helper_functions import resample
 
 
-raw_data_path = "data/raw_DAS/"
+raw_data_path = "../data/raw_DAS/"
 denoised_data_path = "experiments/13_isken_filter/denoisedDAS"
 files = os.listdir(raw_data_path)
 

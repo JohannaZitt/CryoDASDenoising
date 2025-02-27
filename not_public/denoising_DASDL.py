@@ -1,23 +1,11 @@
 import gc
-from sys import prefix
 
-import h5py
 import numpy as np
 import scipy.io as sio
 import os
-import time
-from datetime import timedelta
 from tensorflow import keras
 
-from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5, write_das_h5
-
-from pyDASDL.Utils import patch, patch_inv
-from pyDASDL.cwt_2d import cwt_2d
-from pyDASDL.mf import mf
-from pyDASDL.fk import fkdip
-from pyDASDL.bp import bandpass
-
-from helper_functions import butter_bandpass_filter
+from not_public.pyDASDL.Utils import patch, patch_inv
 
 
 def reshape(data, ratio):
@@ -107,7 +95,7 @@ def denoise_data_DASDL(data_file, model):
 
 
 """  Load model  """
-model = keras.models.load_model("experiments/15_DASDL/DASDL_models/DAS_PATCH_Johanna.h5")
+model = keras.models.load_model("../experiments/15_DASDL/DASDL_models/DAS_PATCH_Johanna.h5")
 #model.summary()
 
 """ Parameters """
@@ -120,7 +108,7 @@ model = keras.models.load_model("experiments/15_DASDL/DASDL_models/DAS_PATCH_Joh
 
 #for data_type in data_types:
 
-path_to_files = "experiments/15_DASDL/cwt_scale_data_image"
+path_to_files = "../experiments/15_DASDL/cwt_scale_data_image"
 files = os.listdir(path_to_files)
 for file in files:
 

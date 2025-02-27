@@ -54,8 +54,8 @@ experiments = ["01_ablation_horizontal", "03_accumulation_horizontal", "07_retra
 
 for experiment in experiments:
 
-    raw_path = os.path.join("data", "raw_DAS/")
-    denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
+    raw_path = os.path.join("../data", "raw_DAS/")
+    denoised_path = os.path.join("../experiments", experiment, "denoisedDAS/")
 
     ids = [5, 20, 82]
 

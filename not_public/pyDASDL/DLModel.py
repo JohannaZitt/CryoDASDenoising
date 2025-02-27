@@ -7,7 +7,7 @@
 import tensorflow
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.layers import concatenate, Flatten, Add, Reshape, Dense, GlobalAvgPool1D, multiply
-from pyDASDL.Utils import *
+from not_public.pyDASDL.Utils import *
 from keras.layers import Lambda
 from tensorflow.keras import layers
 from tensorflow.keras.models import Model

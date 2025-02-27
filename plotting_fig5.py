@@ -97,7 +97,7 @@ ids = [0, 1, 2, 3, 4, 5, 6, 8, 10, 11, 13, 14, 15, 22, 28, 32, 34, 35, 39, 41, 4
  82]
 
 """ Experiment """
-experiment = "03_accumulation_horizontal"
+experiment = "02_accumulation_horizontal"
 
 raw_path = os.path.join("data", "raw_DAS/")
 denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
