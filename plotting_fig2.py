@@ -40,8 +40,8 @@ channel_wiggle_comparison = 28#28
 SNR_values = [0.0, 1.0, 3.2, 10.0]
 
 col_pink = "#CE4A75"
-#col_purple = "#3C049B"
-#col_pink = "#C7427C"
+col_dark_blue = "#11045E"
+
 fs=16 # fontsize
 delta = 2 # fontsize delta
 
@@ -91,14 +91,16 @@ for i, noisy_data_name in enumerate(noisy_data_names):
 
     """ Plotting wiggle for wiggle comparison """
     axs[i, 3].plot(ground_truth_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color=col_pink,
-                       label="Target Waveform", linewidth=1.5, alpha=0.8, zorder=1)
+                       label="Target Waveform", linewidth=1.5, alpha=0.9, zorder=1)
 
     if not i == 0:
-        axs[i, 3].plot(0.8*data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="grey",
-                   label="Noisy", linewidth=1.5, alpha=0.6, zorder=1)
+        axs[i, 3].plot(0.8*data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color=col_dark_blue,
+                   label="Noisy", linewidth=1.2, alpha=0.4, zorder=1)
 
-    axs[i, 3].plot(0.6*denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="black",
-               label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
+    axs[i, 3].plot(0.6*denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color=col_dark_blue,
+               label="Denoised", linewidth=1.2, alpha=0.9, zorder=1)
+
+    #axs[1, 3].legend(fontsize=20)
 
 
     # print max. amplitudes:
@@ -159,10 +161,10 @@ axs[3, 1].annotate("", xy=(t_start_wiggle-t_start+200, 59.5),
                         arrowprops=dict(color="black", arrowstyle=arrow_style, linewidth=1))
 
 
-axs[0, 0].set_title("Synthetics", fontsize=fs+4, y=1.05)
-axs[0, 1].set_title("Denoised", fontsize=fs+4, y=1.05)
-axs[0, 2].set_title("LWC", fontsize=fs+4, y=1.05)
-axs[0, 3].set_title("Wiggle Comparison", fontsize=fs+4, y=1.05)
+axs[0, 0].set_title("Synthetic DAS Section", fontsize=fs+2, y=1.05)
+axs[0, 1].set_title("Denoised DAS Section", fontsize=fs+2, y=1.05)
+axs[0, 2].set_title("LWC", fontsize=fs+2, y=1.05)
+axs[0, 3].set_title("Time Series Comparison", fontsize=fs+2, y=1.05)
 
 
 """ Add letters in plots: """

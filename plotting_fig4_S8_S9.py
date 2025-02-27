@@ -12,6 +12,7 @@ from helper_functions import load_das_data, butter_bandpass_filter, compute_movi
 
 Here Figure 4 is generated
 
+TODO: DASDL15 without .h5 data
 
 """
 
@@ -49,7 +50,7 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
 # "14_julius_filter"
 # "15_DASDL"
 
-experiment_names = ["J-invariant\ncryo", "J-invariant\nearth+cryo", "J-invariant\nearth", "DASDL", "AFK", "Conventional"]
+experiment_names = ["$\mathcal{J}$-invariant\ncryo", "$\mathcal{J}$-invariant\nearth+cryo", "$\mathcal{J}$-invariant\nearth", "DASDL", "AFK", "Conventional"]
 experiments = ["02_accumulation_horizontal", "12_vanende_finetuned_cryo", "11_vanende_earth", "15_DASDL", "13_afk", "14_conventional"] #
 ids = [5, 20, 82]
 
@@ -73,7 +74,7 @@ for id in ids:
 
         raw_path = os.path.join("data", "raw_DAS/")
         if experiment == "15_DASDL":
-            denoised_path = os.path.join("experiments", experiment, "denoisedDAS_image/complete/")
+            denoised_path = os.path.join("experiments", experiment, "denoisedDAS_image/complete_h5/")
         else:
             denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
 
@@ -160,15 +161,8 @@ for id in ids:
         #cbar.set_ticklabels(['-1', '0', '1'])
 
         """ Plotting Wiggle comparison """
-        #col_pink = "#CE4A75"
-        col_purple = "#3C049B"
-        #col2 = "#6700A8"
-        #col3 = "#A01A9C"
-        col_pink = "#C7427C"
-        #col5 = "#E97158"
-        #col6 = "#F0804E"
-        #col7 = "#FDAD32"
-        #col8 = "#F3F027"
+        col_pink = "#CE4A75"
+        col_dark_blue = "#11045E"
         if id == 82:
             t_start_wiggle = 320
             t_end_wiggle = 480
@@ -177,12 +171,15 @@ for id in ids:
             t_end_wiggle = 430
         #axs[i, 2].plot(raw_minus_denoised_data_norm[middle_channel][t_start_wiggle:t_end_wiggle],
         #               color="grey", label="Residuals", linewidth=1.5, alpha=0.8, zorder=1)
+
         axs[i, 2].plot(seis_data[t_start_wiggle:t_end_wiggle],
-                       color="black", label="Co-Located Seismometer", linewidth=1.5, alpha=1, zorder=1)
+                       color=col_pink, label="Co-Located Seismometer", linewidth=1.5, alpha=1, zorder=1)
+
         axs[i, 2].plot(raw_data_norm[middle_channel][t_start_wiggle:t_end_wiggle],
-                       color=col_purple, label="Noisy", linewidth=1.5, alpha=0.8, zorder=1)
+                       color=col_dark_blue, label="Noisy", linewidth=1.2, alpha=0.4, zorder=1)
+
         axs[i, 2].plot(denoised_data_norm[middle_channel][t_start_wiggle:t_end_wiggle],
-                       color=col_pink, label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
+                       color=col_dark_blue, label="Denoised", linewidth=1.2, alpha=1, zorder=1)
 
         axs[i, 2].set_yticks([])
         ax2 = axs[i, 2].twinx()
@@ -259,7 +256,7 @@ for id in ids:
     """ Set Titles """
     axs[0, 0].set_title("Denoised", y=1.0, fontsize=fs+2)
     axs[0, 1].set_title("Residuals", y=1.0, fontsize=fs+2)
-    axs[0, 2].set_title("Wiggle Comparison", y=1.0, fontsize=fs+2)
+    axs[0, 2].set_title("Time Series Comparison", y=1.0, fontsize=fs+2)
 
 
     """ Add letters in plots """
@@ -277,5 +274,5 @@ for id in ids:
 
     """ Save Plot """
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("plots/comparison/modelcomparison_test_" + str(id) + ".pdf", dpi=400)
+    #plt.show()
+    plt.savefig("plots/comparison/modelcomparison_test_" + str(id) + ".pdf", dpi=400)
