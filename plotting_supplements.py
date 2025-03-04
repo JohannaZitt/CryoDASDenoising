@@ -142,7 +142,14 @@ def plot_sectionplot(raw_data, denoised_data, seis_data, seis_stats, saving_path
     #plt.show()
     plt.savefig(saving_path + ".pdf", bbox_inches="tight", pad_inches=0.5, dpi=400)
 
-# TODO: do it again with the model "02_horizontal_accumulation"
+
+"""
+
+Here the test data from the accumulation is plotted and saved in folder plots/test_data. 
+These plotted events are used for model evaluation in Section 4.2.
+
+"""
+
 
 seismometer_data_path = "data/test_data/accumulation_seismometer/"
 seismometer_events = os.listdir(seismometer_data_path)
@@ -171,7 +178,7 @@ for seismometer_event in seismometer_events:
                                                     receiver=receiver, raw=True, ch_middle=ch_middle, ch_delta=ch_delta)
 
     # Load denoised DAS data:
-    denoised_folder_path = "experiments/03_combined200/denoisedDAS/"
+    denoised_folder_path = "experiments/02_accumulation/denoisedDAS/"
     denoised_data, denoised_headers, denoised_axis = load_das_data(folder_path=denoised_folder_path, t_start=t_start,
                                                                    t_end=t_end, receiver=receiver, raw=False, ch_middle=ch_middle, ch_delta=ch_delta)
 

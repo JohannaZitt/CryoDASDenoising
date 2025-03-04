@@ -29,10 +29,8 @@ experiments/13_afk/denoisedDAS_image
 experiments/14_conventional/denoisedDAS
 experiments/14_conventional/denoisedDAS_image
 
-experiments/15_DASDL/cwt_scale_data
-experiments/15_DASDL/cwt_scale_data_image
-experiments/15_DASDL/DASDL_models
-experiments/15_DASDL/denoisedDAS
+experiments/15_DASDL/DASDL_model
+experiments/15_DASDL/denoisedDAS_test_data
 experiments/15_DASDL/denoisedDAS_image
-experiments/15_DASDL/test_data
+experiments/15_DASDL/test_data_DASDL
 experiments/15_DASDL/training_data

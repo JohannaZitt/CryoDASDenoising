@@ -157,7 +157,7 @@ def plot_sectionplot(raw_data, denoised_data, seis_data, seis_stats, saving_path
     """ Save Figure """
     plt.tight_layout()
     plt.show()
-    #plt.savefig(saving_path + ".png", bbox_inches="tight", pad_inches=0.5, dpi=400)
+    #plt.savefig(saving_path, bbox_inches="tight", pad_inches=0.5, dpi=400)
 
 
 """
@@ -175,36 +175,43 @@ events = {5: ["2020-07-27 19:43:30.5", 45, 75, 1, "ALH", "5_"],
          }
 
 """ Parameters """
-id = 82 #set to 5 for generating Figure S3, set to 20 for generating Figure S4, set to 82 for generating Figure S5
-event_time = events[id][0]
-t_start = datetime.strptime(event_time, "%Y-%m-%d %H:%M:%S.%f")
-t_end = t_start + timedelta(seconds=2)
-experiment = "02_accumulation_horizontal"
-receiver = "ALH"
+ids = [5, 20, 82]
 
-""" load seismometer data """
-string_list = os.listdir("data/test_data/accumulation_seismometer/")
-filtered_strings = [s for s in string_list if s.startswith("ID:" + events[id][5])]
-seis_data_path = "data/test_data/accumulation_seismometer/" + filtered_strings[0]
-seis_stream = read(seis_data_path, starttime=UTCDateTime(t_start-timedelta(seconds=1)), endtime=UTCDateTime(t_end))
-seis_data = seis_stream[0].data
-seis_stats = seis_stream[0].stats
-seis_data = butter_bandpass_filter(seis_data, 1, 120, fs=seis_stats.sampling_rate, order=4)
-seis_data = seis_data/np.abs(seis_data).max()
-seis_data = seis_data[400:]
+for id in ids:
+    event_time = events[id][0]
+    t_start = datetime.strptime(event_time, "%Y-%m-%d %H:%M:%S.%f")
+    t_end = t_start + timedelta(seconds=2)
+    experiment = "02_accumulation"
+    receiver = "ALH"
 
-""" load raw DAS data """
-raw_folder_path = "data/raw_DAS/"
-raw_data, raw_headers, raw_axis = load_das_data(folder_path =raw_folder_path, t_start=t_start, t_end=t_end, receiver=receiver, raw=True, ch_delta_start=events[id][1], ch_delta_end=events[id][2])
+    """ load seismometer data """
+    string_list = os.listdir("data/test_data/accumulation_seismometer/")
+    filtered_strings = [s for s in string_list if s.startswith("ID:" + events[id][5])]
+    seis_data_path = "data/test_data/accumulation_seismometer/" + filtered_strings[0]
+    seis_stream = read(seis_data_path, starttime=UTCDateTime(t_start-timedelta(seconds=1)), endtime=UTCDateTime(t_end))
+    seis_data = seis_stream[0].data
+    seis_stats = seis_stream[0].stats
+    seis_data = butter_bandpass_filter(seis_data, 1, 120, fs=seis_stats.sampling_rate, order=4)
+    seis_data = seis_data/np.abs(seis_data).max()
+    seis_data = seis_data[400:]
 
-""" load denoised DAS data """
-denoised_folder_path = "experiments/" + experiment + "/denoisedDAS/"
-denoised_data, denoised_headers, denoised_axis = load_das_data(folder_path=denoised_folder_path, t_start=t_start, t_end=t_end, receiver=receiver, raw=False, ch_delta_start=events[id][1], ch_delta_end=events[id][2])
+    """ load raw DAS data """
+    raw_folder_path = "data/raw_DAS/"
+    raw_data, raw_headers, raw_axis = load_das_data(folder_path =raw_folder_path, t_start=t_start, t_end=t_end, receiver=receiver, raw=True, ch_delta_start=events[id][1], ch_delta_end=events[id][2])
 
-saving_path = "plots/figS5"
+    """ load denoised DAS data """
+    denoised_folder_path = "experiments/" + experiment + "/denoisedDAS/"
+    denoised_data, denoised_headers, denoised_axis = load_das_data(folder_path=denoised_folder_path, t_start=t_start, t_end=t_end, receiver=receiver, raw=False, ch_delta_start=events[id][1], ch_delta_end=events[id][2])
 
-""" Create Plot """
-plot_sectionplot(raw_data=raw_data.T, denoised_data=denoised_data.T, seis_data=seis_data, seis_stats=seis_stats, saving_path=saving_path, middle_channel=events[id][1], id=id)
+    if id == 5:
+        saving_path = "plots/figS3.pdf"
+    if id == 20:
+        saving_path = "plots/figS4.pdf"
+    if id == 82:
+        saving_path = "plots/figS5.pdf"
+
+    """ Create Plot """
+    plot_sectionplot(raw_data=raw_data.T, denoised_data=denoised_data.T, seis_data=seis_data, seis_stats=seis_stats, saving_path=saving_path, middle_channel=events[id][1], id=id)
 
 
 

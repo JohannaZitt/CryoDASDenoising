@@ -10,7 +10,6 @@ def extract_id(filename):
     id = re.search(r"ID:(\d+)", filename).group(1)
     return id
 
-
 def extract_SNR(filename):
     snr_pattern = re.compile(r"SNR:(\d+(\.\d+)?)\.npy")
     match = re.search(snr_pattern, filename)
@@ -37,6 +36,7 @@ t_end_wiggle=650
 channel_wiggle_comparison=32
 
 col_pink = "#CE4A75"
+col_dark_blue = "#11045E"
 fs=16
 
 event_id = 34
@@ -58,7 +58,7 @@ event_names.append(first_event)
 event_names = event_names[::-1]
 
 """ Get Denoised Data Names"""
-experiment = "03_accumulation_horizontal"
+experiment = "02_accumulation"
 denoised_data_path = os.path.join("experiments", experiment, "denoised_synthetic_DAS", "from_DAS")
 denoised_event_names = []
 
@@ -104,17 +104,13 @@ for i, event_name in enumerate(event_names):
 
     """ Plotting Wiggle Comparison """
     axs[i, 3].plot(ground_truth_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color=col_pink,
-                 label="Raw", linewidth=1.5, alpha=0.8, zorder=1)
+                 label="Target Waveform", linewidth=1.5, alpha=0.9, zorder=1)
     if not i == 0:
-      axs[i, 3].plot(data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="grey",
-                     label="Synthetics",
-                     linewidth=1.5, alpha=0.6, zorder=1)
-    axs[i, 3].plot(denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color="black",
-                 label="Denoised", linewidth=1.5, alpha=0.8, zorder=1)
-
-
-    # Legend
-    #axs[i, 3].legend(fontsize=15)
+      axs[i, 3].plot(data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color=col_dark_blue,
+                     label="Noisy",
+                     linewidth=1.2, alpha=0.4, zorder=1)
+    axs[i, 3].plot(denoised_data[channel_wiggle_comparison][t_start_wiggle:t_end_wiggle], color=col_dark_blue,
+                 label="Denoised", linewidth=1.2, alpha=0.9, zorder=1)
 
     """ Label and Ticks """
     axs[i, 0].set_ylabel("Offset [km]", fontsize=fs)
@@ -167,10 +163,10 @@ axs[3, 1].annotate("", xy=(t_end_wiggle, 59.5),
 
 
 
-axs[0, 0].set_title("Synthetics", fontsize=fs+4, y=1.05)
-axs[0, 1].set_title("Denoised", fontsize=fs+4, y=1.05)
-axs[0, 2].set_title("LWC", fontsize=fs+4, y=1.05)
-axs[0, 3].set_title("Wiggle Comparison", fontsize=fs+4, y=1.05)
+axs[0, 0].set_title("Synthetic DAS Section", fontsize=fs+2, y=1.05)
+axs[0, 1].set_title("Denoised DAS Section", fontsize=fs+2, y=1.05)
+axs[0, 2].set_title("LWC", fontsize=fs+2, y=1.05)
+axs[0, 3].set_title("Time Series Comparison", fontsize=fs+2, y=1.05)
 axs[3, 2].set_xticks([1, 3, 5], [1, 3, 5], fontsize=fs-2)
 
 """  Add letters in plots: """

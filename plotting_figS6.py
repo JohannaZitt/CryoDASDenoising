@@ -11,7 +11,7 @@ from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5
 
 def get_event_time_from_id(id):
 
-    folder_to_filenames = "experiments/02_accumulation_horizontal/plots/accumulation/folder_for_sta_lta"
+    folder_to_filenames = "experiments/02_accumulation/plots/accumulation/folder_for_sta_lta"
 
     strings = os.listdir(folder_to_filenames)
     filtered_strings = [s for s in strings if "ID:"+str(id)+"_" in s]
@@ -65,27 +65,26 @@ end_ch = 700
 fs = 400
 short_window_length = 0.1 # 0.1
 long_window_length = 5 #5
-# short_window_length values: 0.1
-# long_window_length values: 5
 short_wl = int(short_window_length * fs)
 long_wl = int(long_window_length * fs)
 chanel_range = 20
 event_date = "2020-07-27"
-event_time = get_event_time_from_id(id=id)
-t_start = datetime.strptime(event_date + " " + event_time + ".0", "%Y-%m-%d %H:%M:%S.%f")
-t_start = t_start - timedelta(seconds=25)
+event_time = "00:21:46.3"
+t_start = datetime.strptime(event_date + " " + event_time, "%Y-%m-%d %H:%M:%S.%f")
+t_start = t_start - timedelta(seconds=10)
 t_end = t_start + timedelta(seconds=35)
 
 """ load raw DAS data """
 raw_folder_path = "data/raw_DAS/"
 raw_data, raw_headers, raw_axis = load_das_data(folder_path=raw_folder_path, t_start=t_start, t_end=t_end, raw=True)
 raw_data = raw_data[:, start_ch:end_ch]
-#print(raw_data.shape)
+print(raw_data.shape)
 
 """ load denoised DAS data """
-denoised_folder_path = "experiments/03_accumulation_horizontal/denoisedDAS/"
+denoised_folder_path = "experiments/02_accumulation/denoisedDAS/"
 denoised_data, denoised_headers, denoised_axis = load_das_data(folder_path=denoised_folder_path, t_start=t_start, t_end=t_end, raw=False)
 denoised_data = denoised_data[:, start_ch:end_ch]
+print(denoised_data.shape)
 
 """ 1.1 Compute LTA/STA for every chanel """
 csl_raw = np.zeros(raw_data.shape)
@@ -211,7 +210,7 @@ for i in range(4):
 
 """ Save Plot """
 plt.tight_layout()
-#plt.savefig("plots/figS6.pdf", dpi=300)
+#plt.savefig("plots/figS6_test.pdf", dpi=300)
 plt.show()
 
 
