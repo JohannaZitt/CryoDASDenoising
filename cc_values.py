@@ -1,17 +1,17 @@
 
 import csv
 import os
-
-import matplotlib.pyplot as plt
 import numpy as np
 
+"""
+
+Here the values for Table 1 in the paper are calculated. 
 
 
-experiments = ["01_ablation_horizontal", "02_accumulation_horizontal", "03_combined200", "11_vanende_earth", "12_vanende_finetuned_cryo",
+"""
+
+experiments = ["01_ablation", "02_accumulation", "03_combined200", "11_vanende_earth", "12_vanende_finetuned_cryo",
                "13_afk", "14_conventional", "15_DASDL"]
-#experiments = ["03_combined200"]
-
-
 
 
 for experiment in experiments:

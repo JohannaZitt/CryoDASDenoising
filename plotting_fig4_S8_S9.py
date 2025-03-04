@@ -42,17 +42,8 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
 #
 
 """ Experiment"""
-# "01_ablation_horizontal" #
-# "03_accumulation_horizontal"
-# "07_retrained_combined200"
-# "11_vanende"
-# "12_vanende_finetuned_cryo"
-# "13_isken_filter"
-# "14_julius_filter"
-# "15_DASDL"
-
 experiment_names = ["$\mathcal{J}$-invariant\ncryo", "$\mathcal{J}$-invariant\nearth+cryo", "$\mathcal{J}$-invariant\nearth", "DASDL", "AFK", "Conventional"]
-experiments = ["02_accumulation_horizontal", "12_vanende_finetuned_cryo", "11_vanende_earth", "15_DASDL", "13_afk", "14_conventional"] #
+experiments = ["02_accumulation", "12_vanende_finetuned_cryo", "11_vanende_earth", "15_DASDL", "13_afk", "14_conventional"] #
 ids = [5, 20, 82]
 
 for id in ids:
@@ -77,7 +68,7 @@ for id in ids:
         if experiment == "15_DASDL":
             denoised_path = os.path.join("experiments", experiment, "denoisedDAS_image/complete_h5/")
         else:
-            denoised_path = os.path.join("experiments", experiment, "denoisedDAS/")
+            denoised_path = os.path.join("experiments", experiment, "denoisedDAS_image/")
 
         event_time = event_times[id][0]
         t_start = datetime.strptime(event_time, "%Y-%m-%d %H:%M:%S.%f")
@@ -275,5 +266,5 @@ for id in ids:
 
     """ Save Plot """
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("plots/comparison/modelcomparison_test_" + str(id) + ".pdf", dpi=400)
+    plt.show()
+    #plt.savefig("plots/comparison/modelcomparison_test_" + str(id) + ".pdf", dpi=400)

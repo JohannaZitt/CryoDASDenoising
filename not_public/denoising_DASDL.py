@@ -95,7 +95,7 @@ def denoise_data_DASDL(data_file, model):
 
 
 """  Load model  """
-model = keras.models.load_model("../experiments/15_DASDL/DASDL_models/DAS_PATCH_Johanna.h5")
+model = keras.models.load_model("../experiments/15_DASDL/DASDL_models/DAS_PATCH_rhonegletscher.h5")
 #model.summary()
 
 """ Parameters """

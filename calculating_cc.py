@@ -1,6 +1,5 @@
 
 import csv
-import math
 import os
 import re
 from datetime import datetime, timedelta
@@ -8,12 +7,8 @@ from datetime import datetime, timedelta
 import numpy as np
 from obspy import read
 
-
 from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5
-
 from helper_functions import butter_bandpass_filter, compute_moving_coherence, xcorr, get_middel_channel
-
-
 
 
 def resample(data, ratio):
@@ -60,8 +55,6 @@ def load_das_data(folder_path, t_start, t_end, receiver, raw):
 
 def calculate_snr(data, signal_window_length, metric, seis_data):
 
-    snr = []
-
     # calculate cut-off
     max_position = np.argmax(seis_data)
     cut_position = int(np.clip(max_position, signal_window_length / 2, data.shape[0] - signal_window_length / 2))
@@ -72,8 +65,6 @@ def calculate_snr(data, signal_window_length, metric, seis_data):
 
     short_window = data[start_signal:end_signal, :]
     long_window = np.concatenate((data[:start_signal, :], data[end_signal:, :]), axis=0)
-    #print(short_window.shape)
-    #print(long_window.shape)
 
     # Compute metrics for signal and noise
     if metric == "power":
@@ -97,17 +88,18 @@ def calculate_snr(data, signal_window_length, metric, seis_data):
     return np.mean(snr)
 
 
+"""
+
+For running this script the denoised data of experiment 02_accumulation needs to be provided. Data is available at
+
+Here we calculate the local waveform coherence (LWC), the cross correlation between DAS data and co-located seismometer (CC)
+and the SNR gain as described in Section 4.3.2.
+The values are calculated for each event and saved in the file experiments/experiment/cc_evaluation.csv.
+The values for Table 1 in the paper are calculated in the file cc_values.py
 
 """
 
-Here we calculate the Local Waveform Coherence as well as the Cross Correlation between DAS data and Co-located Seismometer
-as Described in Section 4.1.1 and Section 4.3.
-
-"""
-
-experiments = ["03_combined200"]
-
-
+experiments = ["02_accumulation"]
 data_types = ["ablation", "accumulation"] #
 
 for experiment in experiments: # for every experiment
@@ -191,9 +183,6 @@ for experiment in experiments: # for every experiment
                 raw_folder_path = "data/raw_DAS/"
                 raw_data, raw_headers, raw_axis = load_das_data(folder_path =raw_folder_path, t_start = t_start, t_end = t_end, receiver = receiver, raw = True)
 
-                #print(raw_data.shape)
-                #print(seismometer_event)
-
                 """ Load Denoised DAS data """
                 denoised_folder_path = "experiments/" + experiment + "/denoisedDAS/"
                 if experiment == "15_DASDL":
@@ -211,7 +200,7 @@ for experiment in experiments: # for every experiment
 
 
                 """
-                Calculate CC Gain
+                Calculate LWC Gain
                 """
                 t_window_start = 688
                 t_window_end = t_window_start + 1024

@@ -35,7 +35,7 @@ event_times = {0: ["2020-07-27 08:17:34.5", 40, 40, 1, "ALH"],
 
 
 raw_path = os.path.join("data", "raw_DAS/")
-denoised_path = "experiments/02_accumulation_horizontal/denoisedDAS/"
+denoised_path = "experiments/02_accumulation/denoisedDAS/"
 
 ids = [5, 20, 82]
 
@@ -246,5 +246,5 @@ for i in range(3):
 
 """ Save Plot """
 plt.tight_layout()
-#plt.show()
-plt.savefig("plots/fig3.pdf", dpi=400)
+plt.show()
+#plt.savefig("plots/fig3.pdf", dpi=400)

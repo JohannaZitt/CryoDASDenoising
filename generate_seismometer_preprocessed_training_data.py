@@ -9,9 +9,7 @@ from helper_functions import butter_bandpass_filter as bandpass_filter
 from helper_functions import resample_seis as resample
 
 
-
 """
-
 Here we generate the initial waveforms from seismometer data for model training as described in Section 3.2 Model Training. 
 The waveforms are converted to strain rate, bandpass filtered, downsampled and normalized by std.
 
@@ -37,7 +35,7 @@ rollout = int(rollouttotal / 2)
 
 # directories
 savedir = "data/training_data/preprocessed_seismometer/"
-folders = ["01_ablation_horizontal", "02_ablation_vertical", "03_accumulation_horizontal", "04_accumulation_vertical", "09_borehole_seismometer"]
+folders = ["01_ablation", "02_accumulation"]
 
 for folder in folders:
 
@@ -103,15 +101,15 @@ for i in range(4):
     array200 = array200[0:50]
     arrays200.append(array200)
 combined_array200 = np.vstack(arrays200)
-np.save(savedir + "05_combined200", combined_array200)
+np.save(savedir + "03_combined200", combined_array200)
 
 # Compute initial waveform for combined800 model
-arrays800 = []
-for i in range(4):
-    array800 = np.load("data/training_data/preprocessed_seismometer/" + folders[i] + ".npy")
-    arrays800.append(array800)
-combined_array = np.vstack(arrays800)
-np.save(savedir + "06_combined800", combined_array)
+#arrays800 = []
+#for i in range(4):
+#    array800 = np.load("data/training_data/preprocessed_seismometer/" + folders[i] + ".npy")
+#    arrays800.append(array800)
+#combined_array = np.vstack(arrays800)
+#np.save(savedir + "06_combined800", combined_array)
 
 
 

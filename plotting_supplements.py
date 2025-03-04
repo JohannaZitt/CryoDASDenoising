@@ -7,9 +7,6 @@ from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5
 from helper_functions import get_middel_channel, butter_bandpass_filter, resample
 import numpy as np
 
-# TODO: save plot for every event, and add red arrow
-
-
 def load_das_data(folder_path, t_start, t_end, receiver, raw, ch_middle, ch_delta):
 
     """
@@ -47,7 +44,6 @@ def load_das_data(folder_path, t_start, t_end, receiver, raw, ch_middle, ch_delt
         #data[:, i] = data[:,i] / np.std(data[:, i])
 
     return data, headers, axis
-
 
 def plot_sectionplot(raw_data, denoised_data, seis_data, seis_stats, saving_path, middle_channel, id):
 
@@ -146,7 +142,7 @@ def plot_sectionplot(raw_data, denoised_data, seis_data, seis_stats, saving_path
     #plt.show()
     plt.savefig(saving_path + ".pdf", bbox_inches="tight", pad_inches=0.5, dpi=400)
 
-
+# TODO: do it again with the model "02_horizontal_accumulation"
 
 seismometer_data_path = "data/test_data/accumulation_seismometer/"
 seismometer_events = os.listdir(seismometer_data_path)

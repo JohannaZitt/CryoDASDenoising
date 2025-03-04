@@ -60,6 +60,12 @@ def compute_shift(gauge = 12, slowness_type = "mean", fs = 400): # gauge is here
     shift = gauge * slowness * fs
     return round(shift)
 
+"""
+
+Here the data for the synthetic tests as described in Section 4.3 are generated
+
+
+"""
 
 fs = 400
 lowcut = 1
@@ -102,8 +108,7 @@ for n, event_time in enumerate(event_times):
 
         """ Save Data """
         file_name = "DAS_ID:" + str(id) + "_SNR:" + str(round(SNR, 1))
-        np.save("/home/johanna/PycharmProjects/MAIN_DAS_denoising/data/synthetic_DAS/from_DAS/" + file_name, synthetic_data)
-
+        np.save("data/synthetic_DAS/from_DAS/" + file_name, synthetic_data)
 
 
 

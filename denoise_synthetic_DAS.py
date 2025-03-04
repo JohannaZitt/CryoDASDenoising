@@ -1,8 +1,6 @@
 import os
-
 import keras
 import numpy as np
-
 
 
 def denoise_file (DAS_data, model, timesamples = 1024, N_sub = 11):
@@ -79,12 +77,12 @@ def denoise_file (DAS_data, model, timesamples = 1024, N_sub = 11):
 
 """
 
-Here we denoise the synthetically generated test data as described in Section 3.4 Denoising Procedure
+Here we denoise the synthetically generated test data as described in Section 3.3 Denoising Procedure
 
 
 """
 
-model_names = ["02_accumulation_horizontal"]
+model_names = ["02_accumulation"]
 
 data_type = "from_seis"
 

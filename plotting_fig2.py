@@ -47,7 +47,7 @@ delta = 2 # fontsize delta
 
 noisy_data_path = "data/synthetic_DAS/from_seis/"
 noisy_data_names = ["clean_ID:46_SNR:0.npy", "ID:46_SNR:10.0.npy",  "ID:46_SNR:3.2.npy", "ID:46_SNR:1.0.npy"]
-denoised_data_path = "experiments/02_accumulation_horizontal/denoised_synthetic_DAS/from_seis/"
+denoised_data_path = "experiments/02_accumulation/denoised_synthetic_DAS/from_seis/"
 
 
 """ Load Ground Truth Data"""
@@ -184,8 +184,8 @@ for i in range(4):
 plt.tight_layout()
 
 """ Save plot """
-plt.savefig("plots/fig2.pdf", dpi=400)
-#plt.show()
+#plt.savefig("plots/fig2.pdf", dpi=400)
+plt.show()
 
 
 

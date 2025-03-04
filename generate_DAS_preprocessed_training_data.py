@@ -8,13 +8,10 @@ from helper_functions import resample_DAS as resample
 from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5
 
 
-
-
 """
 
-Here we generate the initial DAS data sections for model fine-tuning as described in Section 3.3 Model Fine-Tuning.
+Here we generate the initial DAS data sections for model fine-tuning for the model J-invariant_earth+cryo.
 The waveforms are downsampled in space, downsampled in time, bandpass filtered, demeaned and normalized by std.
-
 
 """
 

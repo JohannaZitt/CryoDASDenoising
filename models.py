@@ -11,11 +11,9 @@ from tensorflow.keras.layers import GaussianDropout
 from tensorflow.keras.optimizers import Adam
 
 
-
 '''
 
 Model classes and training data generation class
-
 
 The code is built upon the software provided by van den Endet et al. [1].
 

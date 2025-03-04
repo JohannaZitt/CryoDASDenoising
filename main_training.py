@@ -13,6 +13,8 @@ from models import seed
 
 """
 
+Here the models are trained as described in Section 3.2.
+
 Primary training is conducted on the initial waveforms generated using seismometer data.
 
 The code is built upon the software provided by van den Endet et al. [1].

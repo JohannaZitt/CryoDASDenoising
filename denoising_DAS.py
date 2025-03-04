@@ -1,6 +1,5 @@
 import gc
 import os
-import sys
 import time
 from datetime import timedelta
 
@@ -10,8 +9,6 @@ import numpy as np
 
 from pydas_readers.readers import load_das_h5_CLASSIC as load_das_h5, write_das_h5
 from helper_functions import butter_bandpass_filter
-
-
 
 
 def resample(data, ratio):
@@ -148,7 +145,7 @@ def deal_with_artifacts(data, filler = 0, Nt=1024):
 
 """
 
-Here we denoise the data as described in Section 3.4 Denoising Procedure
+Here we denoise the data as described in Section 3.3 Denoising Procedure
 
 
 """
@@ -156,7 +153,7 @@ Here we denoise the data as described in Section 3.4 Denoising Procedure
 
 models_path = "experiments"
 
-model_names = ["03_combined200"]
+model_names = ["02_accumulation"]
 
 raw_das_folder_path = "data/raw_DAS"
 
