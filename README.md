@@ -5,32 +5,13 @@
 
 
 This software repository contains the scripts necessary to reproduce the results from the article "Self-Supervised 
-Coherence-Based Denoising on Cryoseismological Distributed Acoustic Sensing Data." The preprint of the article is available 
+Coherence-Based Denoising of Cryoseismological Distributed Acoustic Sensing Data." The preprint of the article is available 
 on authorea: [DOI: 10.22541/au.172779667.76811452/v2](https://doi.org/10.22541/au.172779667.76811452/v2)
 
 
 ### Abstract:
 
-One major challenge in cryoseismology is that signals of interest are often buried within
-the high noise level emitted by a multitude of environmental processes. Events of interest
-potentially stay unnoticed and remain unanalyzed, particularly because conventional
-sensors cannot monitor an entire glacier. However, with Distributed Acoustic Sensing
-(DAS), we can observe seismicity over multiple kilometers. DAS systems turn common
-fiber-optic cables into seismic arrays that measure strain rate data, enabling researchers
-to acquire seismic data in hard-to-access areas with high spatial and temporal resolution.
-We deployed a DAS system on Rhonegletscher, Switzerland, using a 9 km long fiber-optic 
-cable that covered the entire glacier, from its accumulation to its ablation zone,
-recording seismicity for one month. The highly active and dynamic cryospheric environment, 
-in combination with poor coupling, resulted in DAS data characterized by a low
-Signal-to-Noise Ratio (SNR) compared to classical point sensors. Our objective is to effectively 
-denoise this dataset. We use a self-supervised J -invariant U-net autoencoder capable of separating incoherent 
-environmental noise from temporally and spatially coherent signals of interest (e.g.,
-stick-slip or crevasse signals). The method shows enhanced inter-channel coherence, increased
-SNR, and significantly improved visibility of the icequakes. Further, we compare
-different training data types varying in recording position, wavefield component, and waveform 
-diversity. Our approach has the potential to enhance the detection capabilities of
-events of interest in cryoseismological DAS data, hence to improve the understanding
-of processes within Alpine glaciers.
+A major challenge in cryoseismology is that signals of interest are often buried within the high noise level emitted by a variety of environmental processes. Particular Distributed Acoustic Sensing (DAS) data often suffers from low signal-to-noise ratios (SNR) potentially resulting in a multitude of undetected events of interest, which further remain unanalyzed. To record seismicity, we deployed a DAS system on Rhône Glacier, Switzerland, using a 9 km long fiber-optic cable that covered the entire glacier, from its accumulation to its ablation zone. The highly active and dynamic cryospheric environment, in combination with poor coupling, resulted in DAS data characterized by a low SNR. Our objective is to develop and evaluate a method to effectively denoise this cryoseismological DAS dataset, while comparing our approach to state-of-the-art filtering and denoising methods. We propose the J-invariant-cryo denoiser, specifically trained on cryoseismological data and capable of separating incoherent environmental noise from temporally and spatially coherent signals of interest, based on a self-supervised J-invariant U-Net autoencoder. The method enhances inter-channel coherence, improves waveform similarity with co-located seismometers, and increases SNR. The comparison of different methods shows that our approach obtains the highest gain in SNR and highest similarity with co-located seismometers, while suffering from denoising artifacts in rare cases. The proposed denoiser has the potential to enhance the detection capabilities of events of interest in cryoseismological DAS data, hence to improve the understanding of processes within Alpine glaciers. 
 
 
 
@@ -39,8 +20,7 @@ of processes within Alpine glaciers.
 
 1. Download the code using the terminal
 
-       gh repo clone JohannaZitt/MAIN_DAS_denoising
-
+       gh repo clone JohannaZitt/CryoDASDenoising
     Alternatively, download the code via the GitHub user interface:
 
        Code -> Download ZIP
@@ -53,13 +33,13 @@ of processes within Alpine glaciers.
        conda env create -f environment.yml
        conda activate env_main_das_denoising
 
-3. Download the data folder [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13868934.svg)](https://doi.org/10.5281/zenodo.13868934), 
-   unzip it, and replace the empty data folder in the Jupyter project with the downloaded one.
+3. Download the data folder [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14998653.svg)](https://doi.org/10.5281/zenodo.14998653), 
+   unzip it, and replace the empty data folder in the project with the downloaded one.
 
 **Optional:**
 4. To simplify code execution without the need to denoise the real-world data, the denoised data from experiment 
-   03_accumulation_horizontal is provided: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13890738.svg)](https://doi.org/10.5281/zenodo.13890738).
-   Download the folder, unzip it and place it under the directory `experiments/03_accumulation_horizontal`.
+   02_accumulation is provided: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14999918.svg)](https://doi.org/10.5281/zenodo.14999918)
+   Download the folder, unzip it and place it under the directory `experiments/02_accumulation`.
 
 
 
@@ -68,18 +48,24 @@ of processes within Alpine glaciers.
 
 ### calculating_cc.py
 
-Calculates the local waveform coherence and cross-correlation between DAS data and co-located seismometer data for each 
-experiment, as detailed in `Section 4.1.1` and `Section 4.3`. The results are saved in a .csv file named `cc_evaluation_id.csv` 
+Calculates the local waveform coherence and cross-correlation between DAS data and co-located seismometer data, and snr for each 
+experiment, as detailed in `Section 4.3.2`. The results are saved in a .csv file named `cc_evaluation_id.csv` 
 within the respective experiment folder.
 
 **Requirements:** To execute this script for all experiments, the raw DAS data must be denoised beforehand. 
-For experiment 03_accumulation_horizontal, you can download the denoised data (Optional Step 4. in Setup).
+For experiment 02_accumulation, you can download the denoised data (Optional Step 4. in Setup).
+
+
+### cc_values
+
+Calculates the values for Table 1 in the paper. 
+
 
 
 ### denoise_synthetic_DAS.py
 
 Denoises the synthetic data located in the folders `data/synthetic_DAS/from_DAS` and `data/synthetic_DAS/from_seis`, 
-as detailed in `Section 3.4`. The denoised data is saved in the directory: `experiments/experiment_name/denoised_synthetic_DAS`.
+as detailed in `Section 3.3`. The denoised data is saved in the directory: `experiments/experiment_name/denoised_synthetic_DAS`.
 
 
 ### denoising_DAS.py
