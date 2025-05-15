@@ -3,6 +3,7 @@
 
 # Introduction 
 
+![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)
 
 This software repository contains the scripts necessary to reproduce the results from the article "Self-Supervised 
 Coherence-Based Denoising of Cryoseismological Distributed Acoustic Sensing Data." The preprint of the article is available 
@@ -14,6 +15,11 @@ on authorea: [DOI: 10.22541/au.172779667.76811452/v2](https://doi.org/10.22541/a
 A major challenge in cryoseismology is that signals of interest are often buried within the high noise level emitted by a variety of environmental processes. Particular Distributed Acoustic Sensing (DAS) data often suffers from low signal-to-noise ratios (SNR) potentially resulting in a multitude of undetected events of interest, which further remain unanalyzed. To record seismicity, we deployed a DAS system on Rhône Glacier, Switzerland, using a 9 km long fiber-optic cable that covered the entire glacier, from its accumulation to its ablation zone. The highly active and dynamic cryospheric environment, in combination with poor coupling, resulted in DAS data characterized by a low SNR. Our objective is to develop and evaluate a method to effectively denoise this cryoseismological DAS dataset, while comparing our approach to state-of-the-art filtering and denoising methods. We propose the J-invariant-cryo denoiser, specifically trained on cryoseismological data and capable of separating incoherent environmental noise from temporally and spatially coherent signals of interest, based on a self-supervised J-invariant U-Net autoencoder. The method enhances inter-channel coherence, improves waveform similarity with co-located seismometers, and increases SNR. The comparison of different methods shows that our approach obtains the highest gain in SNR and highest similarity with co-located seismometers, while suffering from denoising artifacts in rare cases. The proposed denoiser has the potential to enhance the detection capabilities of events of interest in cryoseismological DAS data, hence to improve the understanding of processes within Alpine glaciers. 
 
 
+# Reference
+
+Parts of the code are built upon the software provided by van den Endet et al. [1].
+
+[1] van den Ende, M., Lior, I., Ampuero, J.-P., Sladen, A., Ferrari, A. ve Richard, C. (2021, 3 Mart). A Self-Supervised Deep Learning Approach for Blind Denoising and Waveform Coherence Enhancement in Distributed Acoustic Sensing data. figshare. doi:10.6084/m9.figshare.14152277.v1
 
 
 # Setup
@@ -176,7 +182,3 @@ If you need assistance, have any questions, or have suggestions for improvements
 
 
 
-# References
-Parts of the code are built upon the software provided by van den Endet et al. [1].
-
-[1] van den Ende, M., Lior, I., Ampuero, J.-P., Sladen, A., Ferrari, A. ve Richard, C. (2021, 3 Mart). A Self-Supervised Deep Learning Approach for Blind Denoising and Waveform Coherence Enhancement in Distributed Acoustic Sensing data. figshare. doi:10.6084/m9.figshare.14152277.v1
